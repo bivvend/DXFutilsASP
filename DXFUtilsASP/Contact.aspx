@@ -2,16 +2,18 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
-    <h3>Your contact page.</h3>
+    <h3>Contact Details</h3>
     <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
+        M-Solv Ltd.<br />
+        Oxonian Park<br />
+        Kidlington<br />
+        Oxford<br />
+        OX5 1FP<br />
         <abbr title="Phone">P:</abbr>
-        425.555.0100
+        +44(0)1865 844070
     </address>
 
     <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+        <strong>Support:</strong>   <a href="mailto:simon.henley@m-solv.com">simon.henley@m-solv.com</a><br />
     </address>
 </asp:Content>
