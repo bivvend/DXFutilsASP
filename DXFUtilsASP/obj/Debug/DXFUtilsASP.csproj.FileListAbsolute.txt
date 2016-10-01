@@ -61,7 +61,6 @@ C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.Google.xml
 C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.csprojResolveAssemblyReference.cache
 C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.dll
 C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.pdb
 C:\Github\DXFUtilsASP\DXFUtilsASP\bin\netDxf.dll
