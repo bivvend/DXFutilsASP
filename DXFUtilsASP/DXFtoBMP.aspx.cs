@@ -9,6 +9,8 @@ namespace DXFUtilsASP
 {
     public partial class DXFtoBMP : System.Web.UI.Page
     {
+        List<Entity> entity_list = new List<Entity>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

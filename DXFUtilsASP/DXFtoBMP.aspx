@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-4">
             <p>
-                <asp:Button ID="ButtonLoadDXF" runat="server" Text="Load DXF" Height="43px" OnClick="ButtonLoadDXF_Click" Width="128px" />
+                <asp:Button ID="ButtonLoadDXF" class="btn btn-primary" runat="server" Text="Load DXF" Height="43px" OnClick="ButtonLoadDXF_Click" Width="128px" />
                 <asp:Label ID="LabelNoEntities" runat="server" Text="Number of Entities: 0"></asp:Label>
             </p>            
         </div>

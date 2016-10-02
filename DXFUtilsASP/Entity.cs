@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace DXFutilsCS
+namespace DXFUtilsASP
 {
     /// <summary>
     /// Description of MarkVector.

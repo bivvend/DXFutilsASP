@@ -174,8 +174,10 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap OLD.css" />
+    <Content Include="Content\bootstrap OLD.min.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Logo.bmp" />
     <Content Include="Content\Site.css" />
     <Content Include="DXFtoBMP.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -183,6 +185,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="Content\bootstrap.min.css" />
     <None Include="Properties\PublishProfiles\Local Publish.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="icon.ico" />

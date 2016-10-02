@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using netDxf;
 using System.Linq;
 
-namespace DXFutilsCS
+namespace DXFUtilsASP
 {
     /// <summary>
     /// Description of DXFlibCS.
