@@ -13,13 +13,31 @@ namespace DXFUtilsASP {
     public partial class DXFtoBMP {
         
         /// <summary>
-        /// ButtonLoadDXF control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonLoadDXF;
+        protected global::System.Web.UI.WebControls.Image Image1;
+        
+        /// <summary>
+        /// FileUploadDXF_TO_BMP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUploadDXF_TO_BMP;
+        
+        /// <summary>
+        /// ButtonUploadToServer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonUploadToServer;
         
         /// <summary>
         /// LabelNoEntities control.

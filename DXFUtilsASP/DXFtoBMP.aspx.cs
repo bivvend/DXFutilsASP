@@ -16,11 +16,5 @@ namespace DXFUtilsASP
 
         }
 
-        protected void ButtonLoadDXF_Click(object sender, EventArgs e)
-        {
-            this.LabelNoEntities.Text = "Test";
-            
-            
-        }
     }
 }
