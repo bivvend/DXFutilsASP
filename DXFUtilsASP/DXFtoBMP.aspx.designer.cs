@@ -22,6 +22,15 @@ namespace DXFUtilsASP {
         protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
+        /// LabelFilename control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelFilename;
+        
+        /// <summary>
         /// FileUploadDXF_TO_BMP control.
         /// </summary>
         /// <remarks>
@@ -47,5 +56,23 @@ namespace DXFUtilsASP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelNoEntities;
+        
+        /// <summary>
+        /// LabelWarn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelWarn;
+        
+        /// <summary>
+        /// BulletedListDXFInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.BulletedList BulletedListDXFInfo;
     }
 }
