@@ -10,10 +10,10 @@
     </div>
     <hr />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
             <div>
                 <h2>
-                    Upload DXF file to server
+                    (1) Upload DXF file to server
                 </h2>
             </div>
             <p> 
@@ -31,18 +31,76 @@
                 <asp:Label ID="LabelWarn" runat="server" Text="Warning:" Visible="False"></asp:Label>
             </p>            
         </div>
+        <div class="col-md-4">
+            <h2>Data from Loaded DXF:</h2>
+            <p>
+                <asp:BulletedList ID="BulletedListDXFInfo" runat="server"></asp:BulletedList>
+            </p>
+            <p>
+                Note:  Polylines, LWPolylines and Splines converted to Arcs and Lines.  Blocks not currently handled.
+            </p>
+        </div>
     </div>
     <hr />
-    <div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>(2) Generate Preview</h2>
+            <p>
+                <asp:Label ID="Label1" runat="server" Text="Layer to render"></asp:Label>
+                <br />
+                <asp:ListBox ID="ListBoxLayers" runat="server" ForeColor="Black" Height="222px" Width="283px"></asp:ListBox>
+            </p>      
+            <p>
+                <asp:Button class="btn btn-primary" ID="ButtonPreview" runat="server" Text="Preview" OnClick="ButtonPreview_Click" />
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Preview</h2>
+            <p>
+                <asp:Label ID="Label5" runat="server" Text="Preview Image"></asp:Label>
+            </p>
+            <p>
+                <asp:Image ID="ImagePreview" runat="server" Height="400px" Width="400px" />
+            </p>
+        </div>
 
-        <h2>Data from loaded DXF:</h2>
-        <p>
-            <asp:BulletedList ID="BulletedListDXFInfo" runat="server"></asp:BulletedList>
-        </p>
-        <p>
-            Note:  Polylines, LWPolylines and Splines converted to Arcs and Lines.  Blocks not currently handled.
-        </p>
+    </div>
+    <hr />
+    <div class="row">        
+        <div class="col-md-4">
+            <h2>Render Settings</h2>
+            <p>
+                <p>
+                <asp:Label class="text_box_label" ID="Label2" runat="server" Text="DPI X" ></asp:Label>
+                <asp:TextBox ID="TextBoxDPIX" runat="server">600</asp:TextBox> <br />
+                </p>
 
-       </div>
+                <p>
+                <asp:Label class="text_box_label" ID="Label3" runat="server" Text="DPI Y" ></asp:Label>
+                <asp:TextBox ID="TextBoxDPIY" runat="server">600</asp:TextBox> <br />
+                </p>
+
+                <p>
+                <asp:Label class="text_box_label" ID="Label4" runat="server" Text="Border (mm)" ></asp:Label>
+                <asp:TextBox ID="TextBoxBorder" runat="server">2</asp:TextBox> <br />
+                </p>
+
+                <p>
+                    <asp:CheckBox ID="CheckBoxInvertX" runat="server"/>
+                    <asp:Label class="checkbox label" ID="Label6" runat="server" Text=' Invert X' ></asp:Label>
+                </p>
+
+                <p>
+                    <asp:CheckBox ID="CheckBoxInvertY" runat="server"/>
+                    <asp:Label class="checkbox label" ID="Label7" runat="server" Text=' Invert Y Coordinates' ></asp:Label>
+                </p>
+
+                <p>
+                    <asp:CheckBox ID="CheckBoxInvertColor" runat="server"/>
+                    <asp:Label class="checkbox label" ID="Label8" runat="server" Text=' Invert Black/White' ></asp:Label>
+                </p>
+            </p>
+        </div>
+    </div>
 
 </asp:Content>

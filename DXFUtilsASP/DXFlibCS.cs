@@ -60,6 +60,7 @@ namespace DXFUtilsASP
         static List<double> SplineKnots = new List<double>();
         static List<netDxf.Entities.LwPolylineVertex> points = new List<netDxf.Entities.LwPolylineVertex>();
         public static List<Entity> vector_list = new List<Entity>();
+        //public static List<netDx
 
         static int number = 0;
         #endregion
@@ -195,8 +196,6 @@ namespace DXFUtilsASP
                 {
                     layer_string = a_string;
                     FoundNewLayer = true;
-
-
                 }
                 //read data
                 if (coder_string == "10")
@@ -328,7 +327,7 @@ namespace DXFUtilsASP
                         start_point = new Vector2((double)X1, (double)Y1);
                         end_point = new Vector2((double)X2, (double)Y2);
 
-                        netDxf.Entities.Line aLine = new netDxf.Entities.Line(start_point, end_point);
+                        netDxf.Entities.Line aLine = new netDxf.Entities.Line(start_point, end_point) { Layer = new netDxf.Tables.Layer(layer_string) };
                         //NEED TO ADD LAYER
                         dxfdata.AddEntity(aLine);
                         reset_logic();
@@ -351,7 +350,7 @@ namespace DXFUtilsASP
 
                     if (ReadingLWPolyline == true && LWpoints.Count == LwPointCount && LwPointCount != null)
                     {
-                        netDxf.Entities.LwPolyline aPolyline = new netDxf.Entities.LwPolyline(LWpoints, polyline_closed);
+                        netDxf.Entities.LwPolyline aPolyline = new netDxf.Entities.LwPolyline(LWpoints, polyline_closed) { Layer = new netDxf.Tables.Layer(layer_string) };
                         //aPolyline.Layer.Name=layer_string;
                         dxfdata.AddEntity(aPolyline);
                         reset_logic();
@@ -362,7 +361,7 @@ namespace DXFUtilsASP
                     if (ReadingArc == true && X1 != null && Y1 != null && radius != null && start_angle != null && end_angle != null)
                     {
                         Vector2 center = new Vector2((double)X1, (double)Y1);
-                        netDxf.Entities.Arc aArc = new netDxf.Entities.Arc(center, (double)radius, (double)start_angle, (double)end_angle);
+                        netDxf.Entities.Arc aArc = new netDxf.Entities.Arc(center, (double)radius, (double)start_angle, (double)end_angle) { Layer = new netDxf.Tables.Layer(layer_string) };
                         //aArc.Layer.Name=layer_string;
                         dxfdata.AddEntity(aArc);
                         reset_logic();
@@ -373,7 +372,7 @@ namespace DXFUtilsASP
                     if (ReadingCircle == true && X1 != null && Y1 != null && radius != null)
                     {
                         Vector2 center = new Vector2((double)X1, (double)Y1);
-                        netDxf.Entities.Circle aCircle = new netDxf.Entities.Circle(center, (double)radius);
+                        netDxf.Entities.Circle aCircle = new netDxf.Entities.Circle(center, (double)radius) { Layer = new netDxf.Tables.Layer(layer_string) };
                         //aCircle.Layer.Name=layer_string;
                         dxfdata.AddEntity(aCircle);
                         reset_logic();
@@ -386,15 +385,15 @@ namespace DXFUtilsASP
                         netDxf.Entities.Spline aSpline;
                         if (SplineKnots != null && SplineKnots.Count > 0 && spline_degree != null)
                         {
-                            aSpline = new netDxf.Entities.Spline(SplinePoints, SplineKnots.ToArray(), (short)spline_degree);
+                            aSpline = new netDxf.Entities.Spline(SplinePoints, SplineKnots, (short)spline_degree) { Layer = new netDxf.Tables.Layer(layer_string) };
                         }
                         else if (spline_degree != null)
                         {
-                            aSpline = new netDxf.Entities.Spline(SplinePoints, (short)spline_degree, spline_Periodic);
+                            aSpline = new netDxf.Entities.Spline(SplinePoints, (short)spline_degree, spline_Periodic) { Layer = new netDxf.Tables.Layer(layer_string) };
                         }
                         else
                         {
-                            aSpline = new netDxf.Entities.Spline(SplinePoints, spline_Periodic);
+                            aSpline = new netDxf.Entities.Spline(SplinePoints, spline_Periodic) { Layer = new netDxf.Tables.Layer(layer_string) };
                         }
 
 
@@ -467,7 +466,7 @@ namespace DXFUtilsASP
                 if (ReadingPolyline == true && coder_string == "0" && a_string == "SEQEND")
                 {
                     points.Remove(points[0]);
-                    netDxf.Entities.LwPolyline aPolyline = new netDxf.Entities.LwPolyline(points, polyline_closed);
+                    netDxf.Entities.LwPolyline aPolyline = new netDxf.Entities.LwPolyline(points, polyline_closed) { Layer = new netDxf.Tables.Layer(layer_string) };
                     //aPolyline.Layer.Name=layer_string;
                     dxfdata.AddEntity(aPolyline);
                     reset_logic();
@@ -686,17 +685,17 @@ namespace DXFUtilsASP
                 if (o.GetType() == typeof(netDxf.Entities.Line))
                 {
                     netDxf.Entities.Line new_entity = o as netDxf.Entities.Line;
-                    //new_dxf.AddEntity((netDxf.Entities.Line)new_entity.Clone());
                     Entity aEntity = new Entity((float)new_entity.StartPoint.X, (float)new_entity.StartPoint.Y, (float)new_entity.EndPoint.X, (float)new_entity.EndPoint.Y,"LINE");
+                    aEntity.layer = new_entity.Layer.Name;
                     list_of_vectors.Add(aEntity);
                     number++;
                 }
                 if (o.GetType() == typeof(netDxf.Entities.Circle))
                 {
                     netDxf.Entities.Circle new_entity = o as netDxf.Entities.Circle;
-                    //new_dxf.AddEntity((netDxf.Entities.Circle)new_entity.Clone());
                     number++;
                     Entity aEntity = new Entity((float)new_entity.Center.X, (float)new_entity.Center.Y, (float)new_entity.Radius,"CIRCLE");
+                    aEntity.layer = new_entity.Layer.Name;
                     list_of_vectors.Add(aEntity);
                 }
                 if (o.GetType() == typeof(netDxf.Entities.Arc))
@@ -721,6 +720,7 @@ namespace DXFUtilsASP
                         moddedEndangle = 360f + moddedEndangle;
 
                     Entity aEntity = new Entity((float)new_entity.Center.X, (float)new_entity.Center.Y, (float)new_entity.Radius, (float)moddedStartangle, (float)moddedEndangle,"ARC");
+                    aEntity.layer = new_entity.Layer.Name;
                     list_of_vectors.Add(aEntity);
                 }
             }

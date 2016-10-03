@@ -49,8 +49,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="netDxf">
-      <HintPath>..\..\Mscan2\Main Form\MScan\bin\Debug\netDxf.dll</HintPath>
+    <Reference Include="netDxf, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Setup programs\netDxf_2.0.1\netDxf_2.0.1\bin\Release\netDxf.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
