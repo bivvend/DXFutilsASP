@@ -15,8 +15,12 @@ namespace DXFUtilsASP
         protected void Page_Load(object sender, EventArgs e)
         {
             LabelWarn.Visible = false;
+            BulletedListDXFInfo.Items.Clear();
             BulletedListDXFInfo.Items.Add(new ListItem("Number of LAYERS:"));
             BulletedListDXFInfo.Items.Add(new ListItem("Number of LINES:"));
+            BulletedListDXFInfo.Items.Add(new ListItem("Number of ARCS:"));
+            BulletedListDXFInfo.Items.Add(new ListItem("Number of CIRCLES:"));
+
         }
 
         protected void ButtonUploadToServer_Click(object sender, EventArgs e)
@@ -36,6 +40,9 @@ namespace DXFUtilsASP
                              "Content type: " +
                             FileUploadDXF_TO_BMP.PostedFile.ContentType;
                         LabelWarn.Visible = true;
+                        //Convert DXF to entity list
+                        entity_list = DXFlibCS.Extract_Vectors(upload_location + FileUploadDXF_TO_BMP.FileName,"All");
+                        LabelNoEntities.Text = "Number of Entities:" + entity_list.Count;
                     }
                     catch (Exception ex)
                     {

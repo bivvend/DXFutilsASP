@@ -8,10 +8,10 @@
         <p class="lead">Routines for converting DXF files to bitmaps (.bmp/.tiff)</p>
 
     </div>
+    <hr />
     <div class="row">
         <div class="col-md-4">
             <div>
-                <hr />
                 <h2>
                     Upload DXF file to server
                 </h2>
@@ -36,14 +36,6 @@
     <div>
 
         <h2>Data from loaded DXF:</h2>
-        <p>
-            <ul>
-                <li>Number of LAYERS</li>
-                <li>Number of LINES</li>
-                <li>Number of ARCS</li>
-                <li>Number of CIRCLES</li>
-            </ul>
-        </p>
         <p>
             <asp:BulletedList ID="BulletedListDXFInfo" runat="server"></asp:BulletedList>
         </p>
