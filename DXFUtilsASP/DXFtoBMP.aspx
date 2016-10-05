@@ -3,10 +3,10 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/Logo.bmp" Width="300" />
         <h1>DXF to Bitmap Converter</h1>
         <p class="lead">Routines for converting DXF files to bitmaps (.bmp/.tiff)</p>
-
+        <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png" Width="150px" />
+        <asp:Image ID="Image2" runat="server" ImageUrl="~/Content/Images/BMP-512.png" Width="150" />
     </div>
     <hr />
     <div class="row">
@@ -52,6 +52,7 @@
             </p>      
             <p>
                 <asp:Button class="btn btn-primary" ID="ButtonPreview" runat="server" Text="Preview" OnClick="ButtonPreview_Click" />
+                <asp:Label ID="LabelSelectedLayer" runat="server" Text=" "></asp:Label>
             </p>
         </div>
         <div class="col-md-4">
@@ -60,16 +61,26 @@
                 <asp:Label ID="Label5" runat="server" Text="Preview Image"></asp:Label>
             </p>
             <p>
-                <asp:Image ID="ImagePreview" runat="server" Height="1600px" Width="1600px" />
+                <asp:Image ID="ImagePreview" runat="server" Height="600px" Width="600px" />
             </p>
         </div>
 
     </div>
     <hr />
     <div class="row">        
-        <div class="col-md-4">
-            <h2>Render Settings</h2>
+        <div class="col-md-8">
+            <h2>(3) Render Settings</h2>
             <p>
+                <p>
+                <asp:Label class="text_box_label" ID="Label9" runat="server" Text="Layer" ></asp:Label>
+                <asp:TextBox ID="TextBoxSelectedLayer" runat="server">All</asp:TextBox> <br />
+                </p>
+
+                <p>
+                <asp:Label class="text_box_label" ID="Label11" runat="server" Text="Python script" ></asp:Label>
+                <asp:TextBox ID="TextBoxSelectedScript" runat="server"> </asp:TextBox> <br />
+                </p>
+                
                 <p>
                 <asp:Label class="text_box_label" ID="Label2" runat="server" Text="DPI X" ></asp:Label>
                 <asp:TextBox ID="TextBoxDPIX" runat="server">600</asp:TextBox> <br />
@@ -99,6 +110,26 @@
                     <asp:CheckBox ID="CheckBoxInvertColor" runat="server"/>
                     <asp:Label class="checkbox label" ID="Label8" runat="server" Text=' Invert Black/White' ></asp:Label>
                 </p>
+            </p>
+            <p>
+                <asp:Button ID="ButtonRender" class="btn btn-primary" runat="server" Text="Render" OnClick="ButtonRender_Click" Width="245px"/>
+            </p>
+            <p>
+                <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
+            </p>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Rendering scripts</h2>
+            <p>
+                <p>
+                    <asp:Label ID="Label10" runat="server" Text="Script list"></asp:Label>
+                </p>
+                <p>
+                    <asp:ListBox ID="ListBoxScripts" runat="server" Width="283px" ForeColor="Black" Height="128px"></asp:ListBox>
+                <p>
+                    <asp:Button ID="ButtonSelectScript" class="btn btn-primary" runat="server" Text="Select Script" OnClick="ButtonSelectScript_Click" Width="280px" />
+                </p>    
             </p>
         </div>
     </div>

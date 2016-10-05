@@ -14,7 +14,9 @@ namespace DXFUtilsASP
     {
         List<Entity> entity_list = new List<Entity>();
         string upload_location = @"C:\DXFutilswebsite\Uploads\";
+        string script_location = @"C:\DXFutilswebsite\Scripts";
         List<string> current_layer_list = new List<string>();
+        List<string> script_list = new List<string>();
         int line_count = 0;
         int arc_count = 0;
         int circle_count = 0;
@@ -26,16 +28,48 @@ namespace DXFUtilsASP
         double dxf_min_y = -10.0d;
         int angle_dir = 0;
 
+        int preview_width = 600; //overridden later
+        int preview_height = 600;
 
-        int preview_width = 1600; //overridden later
-        int preview_height = 1600; 
 
-            
 
         protected void Page_Load(object sender, EventArgs e)
         {
             LabelWarn.Visible = false;
-      
+            string a_name = "";
+            //this.ListBoxScripts.Items.Clear();
+            //find available scripts
+            bool new_item = true;
+            if (Directory.Exists(script_location))
+            {
+                script_list = Directory.GetFiles(script_location).ToList();
+                foreach (string a_path in script_list)
+                {
+                    new_item = true;
+                    FileInfo info = new FileInfo(a_path);
+                    if (info.Name.Contains(".py"))
+                    {
+                        a_name = info.Name;
+                        foreach(ListItem item in ListBoxScripts.Items)
+                        {
+                            if (item.Value == a_name)
+                                new_item = false;
+                        }
+                        if(new_item)
+                            this.ListBoxScripts.Items.Add(a_name);
+                    }
+
+                }
+            }
+
+            //try
+            //{
+            //    TextBoxSelectedScript.Text = Session["selected_script"].ToString();
+            //}
+            //catch
+            //{
+
+            //}
         }
 
         List<string> Get_Layer_List()
@@ -100,13 +134,16 @@ namespace DXFUtilsASP
                         //extract data from current entity set
                         current_layer_list = Get_Layer_List();
 
-                        foreach(string layer_name in current_layer_list)
-                        {
-                            ListBoxLayers.Items.Add(new ListItem(layer_name));
-                        }
                         //add layer "All"
 
                         ListBoxLayers.Items.Add(new ListItem("All"));
+
+                        foreach (string layer_name in current_layer_list)
+                        {
+                            ListBoxLayers.Items.Add(new ListItem(layer_name));
+                        }
+                        
+                        ListBoxLayers.SelectedIndex = 0;
 
                         BulletedListDXFInfo.Items.Clear();
                         BulletedListDXFInfo.Items.Add(new ListItem(@"Number of LAYERS: " + current_layer_list.Count.ToString()));
@@ -278,13 +315,32 @@ namespace DXFUtilsASP
 
         protected void ButtonPreview_Click(object sender, EventArgs e)
         {
-            entity_list= (List<Entity>)Session["entity_list"];            
+            entity_list= (List<Entity>)Session["entity_list"];
+
+            if (entity_list == null)
+                return;
+
+            string selected_layer = "All";
+
+            try
+            {
+                Session["selected_layer"] = ListBoxLayers.SelectedValue;
+                LabelSelectedLayer.Text = @"Selected Layer = " + ListBoxLayers.SelectedValue;
+                TextBoxSelectedLayer.Text = ListBoxLayers.SelectedValue;
+                selected_layer = ListBoxLayers.SelectedValue;
+
+            }
+            catch
+            {
+                Session["selected_layer"] = "All";
+                LabelSelectedLayer.Text = @"Selected Layer = All";
+            }
 
             if (this.entity_list.Count>0)
             {
                 Calculate_Scale();
 
-                Bitmap bitMap = Make_Preview_BMP();
+                Bitmap bitMap = Make_Preview_BMP(selected_layer);
 
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -298,13 +354,15 @@ namespace DXFUtilsASP
             }
         }
 
-        public Bitmap Make_Preview_BMP()
+        public Bitmap Make_Preview_BMP(string selected_layer)
         {
             //read back session data
             dxf_max_x = (double)Session["dxf_max_x"];
             dxf_max_y = (double)Session["dxf_max_y"];
             dxf_min_x = (double)Session["dxf_min_x"];
             dxf_min_y = (double)Session["dxf_min_y"];
+
+
 
             entity_list  = (List<Entity>)Session["entity_list"];
 
@@ -345,69 +403,130 @@ namespace DXFUtilsASP
             {
                 foreach (Entity e in entity_list)
                 {
-                    if (e.type == "LINE")
+                    if (e.layer == selected_layer || selected_layer == "All")
                     {
-                        x1 = (e.x_start - center_x) * scale_x + preview_width / 2;
-                        y1 = preview_height - ((e.y_start - center_y) * scale_y) - preview_height / 2;
-                        x2 = ((e.x_end - center_x) * scale_x) + preview_width / 2;
-                        y2 = preview_height - ((e.y_end - center_y) * scale_y) - preview_height / 2;
-                        graphics.DrawLine(whitePen, (float)x1, (float)y1, (float)x2, (float)y2);
-
-
-                        if (y1 < 0 || y2 < 0)
-                            angle_dir = 0;
-
-                    }
-
-                    if(e.type =="CIRCLE")
-                    {
-                        x1 = (e.x_center- center_x) * scale_x + preview_width / 2;
-                        y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
-                        radius = e.radius;
-                        graphics.DrawEllipse(whitePen, (float)(x1 - radius * scale_x), (float)(y1 - radius * scale_y), 2.0f * (float)(radius * scale_x), 2.0f * (float)(radius * scale_y));
-
-                    }
-
-                    if(e.type=="ARC")
-                    {
-                        string layer_current = e.layer;
-                        x1 = (e.x_center - center_x) * scale_x + preview_width / 2;
-                        y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
-                        radius = e.radius;
-
-                        //Draw arc uses CW  and degrees
-                        initial_start_angle = e.start_angle;
-                        initial_end_angle = e.end_angle;
-
-                        start_angle = e.start_angle;
-                        end_angle = e.end_angle;
-
-                        if (angle_dir == 0)
+                        if (e.type == "LINE")
                         {
-                            //Angle dir ==0 = CCW definition of angles so need to convert to CW
-                            start_angle = 360.0d - start_angle;
-                            end_angle = 360.0d - end_angle;
+                            x1 = (e.x_start - center_x) * scale_x + preview_width / 2;
+                            y1 = preview_height - ((e.y_start - center_y) * scale_y) - preview_height / 2;
+                            x2 = ((e.x_end - center_x) * scale_x) + preview_width / 2;
+                            y2 = preview_height - ((e.y_end - center_y) * scale_y) - preview_height / 2;
+                            graphics.DrawLine(whitePen, (float)x1, (float)y1, (float)x2, (float)y2);
 
-                            //drawing is upside down, so need to reflect arc in x axis
-                            start_angle = 360.0d - start_angle;
-                            end_angle = 360.0d - end_angle;
 
-                            sweep = end_angle - start_angle;
+                            if (y1 < 0 || y2 < 0)
+                                angle_dir = 0;
 
                         }
-                        else
+
+                        if (e.type == "CIRCLE")
                         {
-                            //Angle dir ==1 = CW definition of angles 
-                            sweep = end_angle - start_angle;
+                            x1 = (e.x_center - center_x) * scale_x + preview_width / 2;
+                            y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
+                            radius = e.radius;
+                            graphics.DrawEllipse(whitePen, (float)(x1 - radius * scale_x), (float)(y1 - radius * scale_y), 2.0f * (float)(radius * scale_x), 2.0f * (float)(radius * scale_y));
+
                         }
 
-                        graphics.DrawArc(whitePen, (float)(x1 - radius * scale_x), (float)(y1 - radius * scale_y), 2.0f * (float)(radius * scale_x), 2.0f * (float)(radius*scale_y), (float)start_angle,(float)sweep );
+                        if (e.type == "ARC")
+                        {
+                            string layer_current = e.layer;
+                            x1 = (e.x_center - center_x) * scale_x + preview_width / 2;
+                            y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
+                            radius = e.radius;
+
+                            //Draw arc uses CW  and degrees
+                            initial_start_angle = e.start_angle;
+                            initial_end_angle = e.end_angle;
+
+                            start_angle = e.start_angle;
+                            end_angle = e.end_angle;
+
+                            if (angle_dir == 0)
+                            {
+                                //Angle dir ==0 = CCW definition of angles so need to convert to CW
+                                start_angle = 360.0d - start_angle;
+                                end_angle = 360.0d - end_angle;
+
+                                //drawing is upside down, so need to reflect arc in x axis
+                                start_angle = 360.0d - start_angle;
+                                end_angle = 360.0d - end_angle;
+
+                                sweep = end_angle - start_angle;
+
+                            }
+                            else
+                            {
+                                //Angle dir ==1 = CW definition of angles 
+                                //drawing is upside down, so need to reflect arc in x axis
+                                start_angle = 360.0d - start_angle;
+                                end_angle = 360.0d - end_angle;
+
+                                sweep = end_angle - start_angle;
+                            }
+
+                            graphics.DrawArc(whitePen, (float)(x1 - radius * scale_x), (float)(y1 - radius * scale_y), 2.0f * (float)(radius * scale_x), 2.0f * (float)(radius * scale_y), (float)start_angle, (float)sweep);
+                        }
                     }
                 }
 
             }
             whitePen.Dispose();
             return a_bmp;
+
+        }
+
+        protected void ButtonSelectScript_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Session["selected_script"] = script_location +@"\" + ListBoxScripts.SelectedValue;
+                TextBoxSelectedScript.Text = ListBoxScripts.SelectedValue;
+            }
+            catch
+            {
+                
+            }
+        }
+
+        protected void ButtonRender_Click(object sender, EventArgs e)
+        {
+            Session["selected_script"] = script_location + @"\" + TextBoxSelectedScript.Text;
+            string script = Session["selected_script"].ToString();
+            double dpi_x = Convert.ToDouble(TextBoxDPIX.Text);
+            double dpi_y = Convert.ToDouble(TextBoxDPIY.Text);
+            string layer_name = TextBoxSelectedLayer.Text;
+            double border = Convert.ToDouble(TextBoxBorder.Text);
+
+            if (script == null)
+                return;
+            if (dpi_x <= 0.0d || dpi_y < 0.0d || dpi_x > 20000.0d || dpi_y > 20000.0d || border <= 0.0d )
+            {
+                LabelWarn.Text = "Data incorrectly set - Out of bounds.";
+                return;
+            }
+
+            bool invert_x = CheckBoxInvertX.Checked;
+            bool invert_y = CheckBoxInvertY.Checked;
+            bool invert_colour = CheckBoxInvertColor.Checked;
+
+            if (File.Exists(script))
+            {
+                
+            }
+            else
+            {
+                LabelRenderWarning.Text = "Script not found";
+                return;
+            }
+            try
+            {
+                LabelRenderWarning.Text = "Render complete";
+            }
+            catch(Exception ex)
+            {
+                LabelRenderWarning.Text = ex.ToString();
+            }
 
         }
     }

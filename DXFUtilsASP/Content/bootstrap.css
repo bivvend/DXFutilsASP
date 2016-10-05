@@ -7008,7 +7008,7 @@ a.list-group-item-danger.active:focus {
 {
     width: 6em;
     float: left;
-    text-align: right;
+    text-align: left;
     margin-right: 0.5em;
 
 }

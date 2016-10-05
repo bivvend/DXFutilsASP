@@ -178,6 +178,8 @@
     <Content Include="Content\bootstrap OLD.css" />
     <Content Include="Content\bootstrap OLD.min.css" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\Images\BMP-512.png" />
+    <Content Include="Content\Images\dxf-icon-transparent.png" />
     <Content Include="Content\Images\Logo.bmp" />
     <Content Include="Content\Site.css" />
     <Content Include="DXFtoBMP.aspx" />
