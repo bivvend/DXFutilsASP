@@ -63,7 +63,6 @@ C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.MicrosoftAccount.x
 C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.dll
 C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.pdb
-C:\Github\DXFUtilsASP\DXFUtilsASP\bin\netDxf.dll
 D:\Github\DXFutilsASP\DXFUtilsASP\bin\roslyn\csc.exe
 D:\Github\DXFutilsASP\DXFUtilsASP\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 D:\Github\DXFutilsASP\DXFUtilsASP\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll

@@ -60,7 +60,7 @@
                 <asp:Label ID="Label5" runat="server" Text="Preview Image"></asp:Label>
             </p>
             <p>
-                <asp:Image ID="ImagePreview" runat="server" Height="400px" Width="400px" />
+                <asp:Image ID="ImagePreview" runat="server" Height="1600px" Width="1600px" />
             </p>
         </div>
 

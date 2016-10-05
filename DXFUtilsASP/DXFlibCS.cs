@@ -87,7 +87,7 @@ namespace DXFUtilsASP
             polyline_closed = false;
             spline_closed = false;
             spline_Periodic = false;
-            layer_string = "";
+            layer_string = "LAYER";
             LwPointCount = null;
             X1 = null;
             Y1 = null;
@@ -127,7 +127,7 @@ namespace DXFUtilsASP
             int LineCount = 0;
             string coder_string = "";
             string a_string = "";
-            string layer_string = "";
+            string layer_string = "LAYER";
 
             Vector2 start_point = new Vector2(0, 0);
             Vector2 end_point = new Vector2(0, 0);
@@ -192,9 +192,75 @@ namespace DXFUtilsASP
                 }
 
                 //read in layer info
-                if (coder_string == "8" && in_block == false && in_entities == true && (ReadingLine == true || ReadingPolyline == true || ReadingArc == true || ReadingCircle == true))
+                if (coder_string == "8" && in_block == false && in_entities == true && (ReadingSpline==true|| ReadingLine == true || ReadingLWPolyline==true || ReadingPolyline == true || ReadingArc == true || ReadingCircle == true))
                 {
-                    layer_string = a_string;
+                    layer_string = a_string.Trim();
+                    bool bad_layer = false;
+                    if(layer_string.Contains("\\"))
+                    {
+                        bad_layer = true;
+                    }
+                    if(layer_string.Contains("<"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains(">"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("/"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains(":"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains(";"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("*"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("*"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("|"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains(","))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("="))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("?"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("'"))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("\""))
+                    {
+                        bad_layer = true;
+                    }
+                    if (layer_string.Contains("`"))
+                    {
+                        bad_layer = true;
+                    }
+                   ///ERROR: The following characters \<>/? ":;*|,=` are not supported for table object names. Parameter name: name
+                    if (bad_layer)
+                    {
+                        layer_string = "BAD_LAYER_NAME_FOUND";
+                    }
                     FoundNewLayer = true;
                 }
                 //read data
@@ -572,6 +638,8 @@ namespace DXFUtilsASP
             List<Entity> list_of_vectors = new List<Entity>();
             DxfDocument dxf = LoadDXF(filename);
             DxfDocument new_dxf = new DxfDocument(); //storage for new objects after conversion
+            List<netDxf.Entities.EntityObject> temp_entity_storage = new List<netDxf.Entities.EntityObject>();
+            netDxf.Entities.Polyline temp_polyline= new netDxf.Entities.Polyline();
 
             number = 0;
             if (dxf == null)
@@ -591,13 +659,16 @@ namespace DXFUtilsASP
             netDxf.Vector2 previous_point = new netDxf.Vector2(0.0d, 0.0d);
             netDxf.Entities.LwPolylineVertex avertex = new netDxf.Entities.LwPolylineVertex();
             netDxf.Entities.PolylineVertex bvertex = new netDxf.Entities.PolylineVertex();
+            
 
-            //convert LWPolylines to Line and Arcs using EXPLODE 
+            //convert Splines to polylines 
             foreach (netDxf.Entities.Spline spline in dxf.Splines)
             {
                 if (spline.Layer.Name == layer_name || layer_name == "All")
                 {
-                    dxf.AddEntity(spline.ToPolyline(spline.ControlPoints.Count * SplineInterpolationNumber));
+                    temp_polyline = spline.ToPolyline(spline.ControlPoints.Count * SplineInterpolationNumber);
+                    temp_polyline.Layer.Name = spline.Layer.Name;
+                    dxf.AddEntity(temp_polyline);
                 }
             }
 
@@ -607,7 +678,13 @@ namespace DXFUtilsASP
             {
                 if (apolyline.Layer.Name == layer_name || layer_name == "All")
                 {
-                    new_dxf.AddEntity(apolyline.Explode());
+                    temp_entity_storage = apolyline.Explode();
+                    foreach (netDxf.Entities.EntityObject e in temp_entity_storage)
+                    {
+                        netDxf.Entities.EntityObject e_new = (netDxf.Entities.EntityObject)e.Clone();
+                        e_new.Layer.Name = apolyline.Layer.Name;
+                        dxf.AddEntity(e_new);
+                    }
                 }
             }
 
@@ -616,7 +693,13 @@ namespace DXFUtilsASP
             {
                 if (apolyline.Layer.Name == layer_name || layer_name == "All")
                 {
-                    new_dxf.AddEntity(apolyline.Explode());
+                    temp_entity_storage = apolyline.Explode();
+                    foreach (netDxf.Entities.EntityObject e in temp_entity_storage)
+                    {
+                        netDxf.Entities.EntityObject e_new = (netDxf.Entities.EntityObject)e.Clone();
+                        e_new.Layer.Name = apolyline.Layer.Name;
+                        dxf.AddEntity(e_new);
+                    }
                 }
             }
 

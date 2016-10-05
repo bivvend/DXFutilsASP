@@ -27,8 +27,8 @@ namespace DXFUtilsASP
         int angle_dir = 0;
 
 
-        int preview_width = 400; //overridden later
-        int preview_height = 400; 
+        int preview_width = 1600; //overridden later
+        int preview_height = 1600; 
 
             
 
@@ -319,6 +319,15 @@ namespace DXFUtilsASP
             double center_x = (dxf_max_x + dxf_min_x) / 2.0d;
             double center_y = (dxf_max_y + dxf_min_y) / 2.0d;
 
+            double radius = 0.0d;
+            double start_angle = 0.0d;
+            double end_angle = 0.0d;
+            double sweep = 0.0d;
+
+            double initial_start_angle = 0.0d;
+            double initial_end_angle = 0.0d;
+
+
 
             if (Math.Abs(dxf_max_x - dxf_min_x) > 0)
             {
@@ -329,7 +338,7 @@ namespace DXFUtilsASP
                 scale_y = ((double)preview_height * 0.9d) / (dxf_max_y - dxf_min_y);
             }
 
-            Pen blackPen = new Pen(Color.Black, 0.1f);
+            Pen whitePen = new Pen(Color.White, 0.1f);
 
             // Draw line to screen.
             using (var graphics = Graphics.FromImage(a_bmp))
@@ -342,17 +351,62 @@ namespace DXFUtilsASP
                         y1 = preview_height - ((e.y_start - center_y) * scale_y) - preview_height / 2;
                         x2 = ((e.x_end - center_x) * scale_x) + preview_width / 2;
                         y2 = preview_height - ((e.y_end - center_y) * scale_y) - preview_height / 2;
-                        graphics.DrawLine(blackPen, (float)x1, (float)y1, (float)x2, (float)y2);
+                        graphics.DrawLine(whitePen, (float)x1, (float)y1, (float)x2, (float)y2);
 
 
                         if (y1 < 0 || y2 < 0)
                             angle_dir = 0;
 
                     }
+
+                    if(e.type =="CIRCLE")
+                    {
+                        x1 = (e.x_center- center_x) * scale_x + preview_width / 2;
+                        y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
+                        radius = e.radius;
+                        graphics.DrawEllipse(whitePen, (float)(x1 - radius * scale_x), (float)(y1 - radius * scale_y), 2.0f * (float)(radius * scale_x), 2.0f * (float)(radius * scale_y));
+
+                    }
+
+                    if(e.type=="ARC")
+                    {
+                        string layer_current = e.layer;
+                        x1 = (e.x_center - center_x) * scale_x + preview_width / 2;
+                        y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
+                        radius = e.radius;
+
+                        //Draw arc uses CW  and degrees
+                        initial_start_angle = e.start_angle;
+                        initial_end_angle = e.end_angle;
+
+                        start_angle = e.start_angle;
+                        end_angle = e.end_angle;
+
+                        if (angle_dir == 0)
+                        {
+                            //Angle dir ==0 = CCW definition of angles so need to convert to CW
+                            start_angle = 360.0d - start_angle;
+                            end_angle = 360.0d - end_angle;
+
+                            //drawing is upside down, so need to reflect arc in x axis
+                            start_angle = 360.0d - start_angle;
+                            end_angle = 360.0d - end_angle;
+
+                            sweep = end_angle - start_angle;
+
+                        }
+                        else
+                        {
+                            //Angle dir ==1 = CW definition of angles 
+                            sweep = end_angle - start_angle;
+                        }
+
+                        graphics.DrawArc(whitePen, (float)(x1 - radius * scale_x), (float)(y1 - radius * scale_y), 2.0f * (float)(radius * scale_x), 2.0f * (float)(radius*scale_y), (float)start_angle,(float)sweep );
+                    }
                 }
 
             }
-            blackPen.Dispose();
+            whitePen.Dispose();
             return a_bmp;
 
         }
