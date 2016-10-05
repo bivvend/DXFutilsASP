@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Diagnostics;
 
 namespace DXFUtilsASP
 {
@@ -15,6 +16,8 @@ namespace DXFUtilsASP
         List<Entity> entity_list = new List<Entity>();
         string upload_location = @"C:\DXFutilswebsite\Uploads\";
         string script_location = @"C:\DXFutilswebsite\Scripts";
+        string python_location = @"C:\Python\Python34-64bit\WinPython-64bit-3.4.2.4\python-3.4.2.amd64\python.exe";
+        string entity_file_storage  = @"C:\DXFutilswebsite\Script_Storage\";
         List<string> current_layer_list = new List<string>();
         List<string> script_list = new List<string>();
         int line_count = 0;
@@ -489,6 +492,56 @@ namespace DXFUtilsASP
             }
         }
 
+        private void Save_Data(string layer_name)
+        {
+            try
+            {
+                entity_list = (List<Entity>)Session["entity_list"];
+                string filename = entity_file_storage + @"\test.csv";
+
+                FileStream fs = File.Open(filename, FileMode.Create);
+                StreamWriter writer = new StreamWriter(fs);
+
+                foreach (Entity e in entity_list)
+                {
+                    if (e.layer == layer_name || layer_name == "All")
+                    {
+                        
+                        writer.WriteLine(e.layer);
+                    }
+                }
+
+                writer.Flush();
+                writer.Close();
+                fs.Close();
+            }
+
+            catch
+            {
+                return;
+            }
+        }
+
+
+        private void run_script(string python_exe, string args)
+        {
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = python_exe;//full path to python.exe
+            start.Arguments = args;//args is path to .py file and any cmd line args
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            TextBoxScriptOutput.Text = "";
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    TextBoxScriptOutput.Text = result;
+                }
+            }
+        }
+
+    
         protected void ButtonRender_Click(object sender, EventArgs e)
         {
             Session["selected_script"] = script_location + @"\" + TextBoxSelectedScript.Text;
@@ -512,7 +565,8 @@ namespace DXFUtilsASP
 
             if (File.Exists(script))
             {
-                
+                Save_Data(layer_name);
+                run_script(python_location, script);
             }
             else
             {

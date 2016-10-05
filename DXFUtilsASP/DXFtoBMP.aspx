@@ -133,5 +133,14 @@
             </p>
         </div>
     </div>
+    <hr />
+        <div class="row">
+        <div class="col-md-8">
+            <h2>Script Output</h2>
+            <p>
+                <asp:TextBox ID="TextBoxScriptOutput" runat="server" TextMode="MultiLine" Height="331px" Width="611px"></asp:TextBox>
+            </p>      
+        </div>
+    </div>
 
 </asp:Content>

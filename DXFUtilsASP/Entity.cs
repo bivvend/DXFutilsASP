@@ -19,14 +19,12 @@ namespace DXFUtilsASP
         public float y_start { get; set; }
         public float x_end { get; set; }
         public float y_end { get; set; }
-
         public string type { get; set; }    //Can be LINE, CIRCLE, ARC
         public float radius { get; set; }
         public float start_angle { get; set; }
         public float end_angle { get; set; }
         public float x_center { get; set; }
         public float y_center { get; set; }
-
         public string layer { get; set; }
 
         public Entity()
