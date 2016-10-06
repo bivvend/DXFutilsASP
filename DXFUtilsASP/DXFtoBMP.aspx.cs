@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace DXFUtilsASP
 {
@@ -23,6 +24,7 @@ namespace DXFUtilsASP
         int line_count = 0;
         int arc_count = 0;
         int circle_count = 0;
+        int point_count = 0;
 
 
         double dxf_max_x = 10.0d;
@@ -80,6 +82,7 @@ namespace DXFUtilsASP
             line_count = 0;
             arc_count = 0;
             circle_count = 0;
+            point_count = 0;
 
             ListBoxLayers.Items.Clear();
 
@@ -101,6 +104,10 @@ namespace DXFUtilsASP
                 if (e.type == "CIRCLE")
                 {
                     circle_count++;
+                }
+                if (e.type == "POINT")
+                {
+                    point_count++;
                 }
             }
             return layer_list;
@@ -133,6 +140,7 @@ namespace DXFUtilsASP
                         line_count = 0;
                         arc_count = 0;
                         circle_count = 0;
+                        point_count = 0;
 
                         //extract data from current entity set
                         current_layer_list = Get_Layer_List();
@@ -153,6 +161,7 @@ namespace DXFUtilsASP
                         BulletedListDXFInfo.Items.Add(new ListItem(@"Number of LINES: " + line_count.ToString()));
                         BulletedListDXFInfo.Items.Add(new ListItem(@"Number of ARCS: " + arc_count.ToString()));
                         BulletedListDXFInfo.Items.Add(new ListItem(@"Number of CIRCLES: " + circle_count.ToString()));
+                        BulletedListDXFInfo.Items.Add(new ListItem(@"Number of POINTS: " + point_count.ToString()));
                     }
                     catch (Exception ex)
                     {
@@ -217,6 +226,18 @@ namespace DXFUtilsASP
                         SearchYMin = e.y_start;
                     if (e.y_end < SearchYMin)
                         SearchYMin = e.y_end;
+                }
+                //POINTS
+                if (e.type == "POINT")
+                {
+                    if (e.x_center > SearchXMax)
+                        SearchXMax = e.x_center;
+                    if (e.y_center> SearchYMax)
+                        SearchYMax = e.y_center;
+                    if (e.x_center< SearchXMin)
+                        SearchXMin = e.x_center;
+                    if (e.y_center < SearchYMin)
+                        SearchYMin = e.y_center;
                 }
 
                 //    # CIRCLES
@@ -365,8 +386,6 @@ namespace DXFUtilsASP
             dxf_min_x = (double)Session["dxf_min_x"];
             dxf_min_y = (double)Session["dxf_min_y"];
 
-
-
             entity_list  = (List<Entity>)Session["entity_list"];
 
             Bitmap a_bmp = new Bitmap(preview_width, preview_height);
@@ -419,6 +438,15 @@ namespace DXFUtilsASP
 
                             if (y1 < 0 || y2 < 0)
                                 angle_dir = 0;
+
+                        }
+
+                        if (e.type == "POINT")
+                        {
+                            x1 = (e.x_center - center_x) * scale_x + preview_width / 2;
+                            y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
+                            graphics.FillRectangle(Brushes.White, new Rectangle((int)x1, (int)y1, 1, 1));
+
 
                         }
 
@@ -494,21 +522,40 @@ namespace DXFUtilsASP
 
         private void Save_Data(string layer_name)
         {
+            Random random = new Random();
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string rand_name = new string(Enumerable.Repeat(chars, 6)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+
+
             try
             {
                 entity_list = (List<Entity>)Session["entity_list"];
-                string filename = entity_file_storage + @"\test.csv";
+                string filename = entity_file_storage + rand_name + ".csv";
+                Session["data_file"] = filename;
+                string to_write = "";
 
                 FileStream fs = File.Open(filename, FileMode.Create);
                 StreamWriter writer = new StreamWriter(fs);
 
+                //get properties from Entity object
+                PropertyInfo[] properties = null;
+                    
+                
                 foreach (Entity e in entity_list)
                 {
                     if (e.layer == layer_name || layer_name == "All")
                     {
-                        
-                        writer.WriteLine(e.layer);
-                    }
+                        properties = e.GetType().GetProperties();
+                        foreach (PropertyInfo pi in properties)
+                        {
+                            to_write += pi.GetValue(e, null).ToString() + "," ;
+                        }
+
+                        writer.WriteLine(to_write);
+                        to_write = "";
+                    }                    
                 }
 
                 writer.Flush();

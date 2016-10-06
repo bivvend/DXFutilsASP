@@ -19,7 +19,7 @@ namespace DXFUtilsASP
         public float y_start { get; set; }
         public float x_end { get; set; }
         public float y_end { get; set; }
-        public string type { get; set; }    //Can be LINE, CIRCLE, ARC
+        public string type { get; set; }    //Can be LINE, CIRCLE, ARC, POINT
         public float radius { get; set; }
         public float start_angle { get; set; }
         public float end_angle { get; set; }
@@ -43,6 +43,15 @@ namespace DXFUtilsASP
 
             this.layer = "0";
 
+        }
+
+        //POINT CONSTRUCTOR
+        public Entity(float fx1, float fx2, string stype)
+        {
+            this.x_center = fx1;
+            this.y_center = fx2;
+            this.type = stype;
+            this.layer = "0";
         }
 
         //LINE CONSTRUCTOR

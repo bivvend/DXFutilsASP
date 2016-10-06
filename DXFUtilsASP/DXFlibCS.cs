@@ -192,7 +192,7 @@ namespace DXFUtilsASP
                 }
 
                 //read in layer info
-                if (coder_string == "8" && in_block == false && in_entities == true && (ReadingSpline==true|| ReadingLine == true || ReadingLWPolyline==true || ReadingPolyline == true || ReadingArc == true || ReadingCircle == true))
+                if (coder_string == "8" && in_block == false && in_entities == true && (ReadingPoint==true || ReadingSpline==true|| ReadingLine == true || ReadingLWPolyline==true || ReadingPolyline == true || ReadingArc == true || ReadingCircle == true))
                 {
                     layer_string = a_string.Trim();
                     bool bad_layer = false;
@@ -423,6 +423,15 @@ namespace DXFUtilsASP
                         entity_count++;
                     }
 
+                    //add POINT if data complete
+                    if(ReadingPoint ==true && X1 != null && Y1 != null)
+                    {
+                        netDxf.Entities.Point aPoint = new netDxf.Entities.Point((double)X1, (double)Y1, 0.0d) { Layer = new netDxf.Tables.Layer(layer_string) };
+                        dxfdata.AddEntity(aPoint);
+                        reset_logic();
+                        entity_count++;
+                    }
+
                     //add arc if data complete
                     if (ReadingArc == true && X1 != null && Y1 != null && radius != null && start_angle != null && end_angle != null)
                     {
@@ -508,6 +517,19 @@ namespace DXFUtilsASP
                     }
                 }
 
+                //flag start of a POIMNT		       
+                if (coder_string == "0" && a_string == "POINT" && in_block == false && in_entities == true)
+                {
+                    if (ReadingPoint == false)
+                    {
+                        reset_logic();
+                        ReadingPoint = true;
+                    }
+                    else
+                    {
+                        reset_logic();
+                    }
+                }
 
                 //flag start of a POLYLINE  
                 if (coder_string == "0" && a_string == "POLYLINE" && in_block == false && in_entities == true)
@@ -522,10 +544,6 @@ namespace DXFUtilsASP
                         reset_logic();
                     }
                 }
-
-
-
-
 
                 //add polyline once have reached SEQEND
 
@@ -712,6 +730,14 @@ namespace DXFUtilsASP
                 }
             }
 
+            foreach (netDxf.Entities.Point aPoint in dxf.Points)
+            {
+                if (aPoint.Layer.Name == layer_name || layer_name == "All")
+                {
+                    new_dxf.AddEntity((netDxf.Entities.Point)aPoint.Clone());
+                }
+            }
+
             foreach (netDxf.Entities.Circle acircle in dxf.Circles)
             {
                 if (acircle.Layer.Name == layer_name || layer_name == "All")
@@ -769,6 +795,14 @@ namespace DXFUtilsASP
                 {
                     netDxf.Entities.Line new_entity = o as netDxf.Entities.Line;
                     Entity aEntity = new Entity((float)new_entity.StartPoint.X, (float)new_entity.StartPoint.Y, (float)new_entity.EndPoint.X, (float)new_entity.EndPoint.Y,"LINE");
+                    aEntity.layer = new_entity.Layer.Name;
+                    list_of_vectors.Add(aEntity);
+                    number++;
+                }
+                if (o.GetType() == typeof(netDxf.Entities.Point))
+                {
+                    netDxf.Entities.Point new_entity = o as netDxf.Entities.Point;
+                    Entity aEntity = new Entity((float)new_entity.Position.X,(float)new_entity.Position.Y,"POINT");
                     aEntity.layer = new_entity.Layer.Name;
                     list_of_vectors.Add(aEntity);
                     number++;
