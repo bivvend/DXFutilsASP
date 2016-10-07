@@ -110,6 +110,10 @@
                     <asp:CheckBox ID="CheckBoxInvertColor" runat="server"/>
                     <asp:Label class="checkbox label" ID="Label8" runat="server" Text=' Invert Black/White' ></asp:Label>
                 </p>
+                <p>
+                    <asp:CheckBox ID="CheckBoxScaleToAll" runat="server"/>
+                    <asp:Label class="checkbox label" ID="Label12" runat="server" Text=' Image size based on all layers?' ></asp:Label>
+                </p>
             </p>
             <p>
                 <asp:Button ID="ButtonRender" class="btn btn-primary" runat="server" Text="Render" OnClick="ButtonRender_Click" Width="245px"/>

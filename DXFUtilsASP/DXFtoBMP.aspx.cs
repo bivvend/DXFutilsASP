@@ -528,12 +528,13 @@ namespace DXFUtilsASP
             string rand_name = new string(Enumerable.Repeat(chars, 6)
               .Select(s => s[random.Next(s.Length)]).ToArray());
 
-
+            bool scale_to_all = CheckBoxScaleToAll.Checked;
             try
             {
                 entity_list = (List<Entity>)Session["entity_list"];
                 string filename = entity_file_storage + rand_name + ".csv";
                 Session["data_file"] = filename;
+                Session["output_file_name"] = rand_name + ".tiff";
                 string to_write = "";
 
                 FileStream fs = File.Open(filename, FileMode.Create);
@@ -545,7 +546,7 @@ namespace DXFUtilsASP
                 
                 foreach (Entity e in entity_list)
                 {
-                    if (e.layer == layer_name || layer_name == "All")
+                    if (e.layer == layer_name || layer_name == "All" || scale_to_all)
                     {
                         properties = e.GetType().GetProperties();
                         foreach (PropertyInfo pi in properties)
@@ -613,7 +614,41 @@ namespace DXFUtilsASP
             if (File.Exists(script))
             {
                 Save_Data(layer_name);
-                run_script(python_location, script);
+                string args = script;  //sys.argv[0]
+                //input_file = str(sys.argv[1])
+                args += " " + Session["data_file"].ToString();
+                //layer_name = str(sys.argv[2])
+                args += " " + layer_name;
+                //DPI_x = float(sys.argv[3])
+                args += " " + dpi_x.ToString();
+                //DPI_y = float(sys.argv[4])
+                args += " " + dpi_y.ToString();
+                //output_filename = str(sys.argv[5])
+                args += " " + entity_file_storage + @"\" + Session["output_file_name"];
+                //invert_x = bool(sys.argv[6] == "True")
+                if (CheckBoxInvertX.Checked)
+                    args += " " + "True";
+                else
+                    args += " " + "False";
+                //invert_y = bool(sys.argv[7] == "True")
+                if (CheckBoxInvertY.Checked)
+                    args += " " + "True";
+                else
+                    args += " " + "False";
+                //invert_colour = bool(sys.argv[8] == "True")
+                if (CheckBoxInvertColor.Checked)
+                    args += " " + "True";
+                else
+                    args += " " + "False";
+                //border = float(sys.argv[9])
+                args += " " + (Convert.ToDouble(TextBoxBorder.Text)).ToString();
+                //scale_to_all = bool(sys.argv[10] == "True")
+                if (CheckBoxScaleToAll.Checked)
+                    args += " " + "True";
+                else
+                    args += " " + "False";
+
+                run_script(python_location, args);
             }
             else
             {
