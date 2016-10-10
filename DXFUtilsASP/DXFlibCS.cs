@@ -60,7 +60,6 @@ namespace DXFUtilsASP
         static List<double> SplineKnots = new List<double>();
         static List<netDxf.Entities.LwPolylineVertex> points = new List<netDxf.Entities.LwPolylineVertex>();
         public static List<Entity> vector_list = new List<Entity>();
-        //public static List<netDx
 
         static int number = 0;
         #endregion
@@ -111,8 +110,9 @@ namespace DXFUtilsASP
         public static DxfDocument LineByLineLoader(string filename)
         {
             vector_list.Clear();
-
-            DxfDocument dxfdata = new DxfDocument();
+            netDxf.Header.HeaderVariables header = new netDxf.Header.HeaderVariables();
+            string head = header.Angdir.ToString();
+            DxfDocument dxfdata = new DxfDocument(header);            
             List<string> list_of_strings = new List<string>();
             //reset logic function
             reset_logic();
@@ -655,6 +655,7 @@ namespace DXFUtilsASP
         {
             List<Entity> list_of_vectors = new List<Entity>();
             DxfDocument dxf = LoadDXF(filename);
+            
             DxfDocument new_dxf = new DxfDocument(); //storage for new objects after conversion
             List<netDxf.Entities.EntityObject> temp_entity_storage = new List<netDxf.Entities.EntityObject>();
             netDxf.Entities.Polyline temp_polyline= new netDxf.Entities.Polyline();
@@ -673,6 +674,8 @@ namespace DXFUtilsASP
                 //return list_of_vectors;
             }
 
+            string ang_dir = dxf.DrawingVariables.Angdir.ToString();
+            string new_ang_dir = new_dxf.DrawingVariables.Angdir.ToString();
 
             netDxf.Vector2 previous_point = new netDxf.Vector2(0.0d, 0.0d);
             netDxf.Entities.LwPolylineVertex avertex = new netDxf.Entities.LwPolylineVertex();
@@ -755,7 +758,7 @@ namespace DXFUtilsASP
             }
 
             List<DxfObject> entities = new List<DxfObject>();
-
+           
             //Convert to Entity
 
             if (layer_name == "All")
@@ -772,6 +775,9 @@ namespace DXFUtilsASP
                 list_of_vectors = ProcessEnitities(new_dxf, entities);
 
             }
+
+            ang_dir = dxf.DrawingVariables.Angdir.ToString();
+            new_ang_dir = new_dxf.DrawingVariables.Angdir.ToString();
 
             //MessageBox.Show(number.ToString());
             //			
@@ -819,22 +825,9 @@ namespace DXFUtilsASP
                 {
                     netDxf.Entities.Arc new_entity = o as netDxf.Entities.Arc;
                     //new_dxf.AddEntity((netDxf.Entities.Arc)new_entity.Clone());
-
-                    //switch start and end angles
-                    double moddedStartangle = 360 - (new_entity.EndAngle);
-                    double moddedEndangle = 360 - (new_entity.StartAngle);
-
-                    //rescale if end angle is less than start
-                    if (moddedEndangle < moddedStartangle)
-                        moddedEndangle = moddedEndangle + 360f;
-
-                    //makes sure no negative angles
-
-                    while (moddedStartangle < 0)
-                        moddedStartangle = 360f + moddedStartangle;
-
-                    while (moddedEndangle < 0)
-                        moddedEndangle = 360f + moddedEndangle;
+                    //NEED TO Convert to CCW if DXF is CW  Angdir
+                    double moddedStartangle = new_entity.StartAngle;
+                    double moddedEndangle = new_entity.EndAngle;
 
                     Entity aEntity = new Entity((float)new_entity.Center.X, (float)new_entity.Center.Y, (float)new_entity.Radius, (float)moddedStartangle, (float)moddedEndangle,"ARC");
                     aEntity.layer = new_entity.Layer.Name;

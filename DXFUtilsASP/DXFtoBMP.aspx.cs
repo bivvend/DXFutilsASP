@@ -466,35 +466,16 @@ namespace DXFUtilsASP
                             y1 = preview_height - ((e.y_center - center_y) * scale_y) - preview_height / 2;
                             radius = e.radius;
 
-                            //Draw arc uses CW  and degrees
+                            //Draw arc uses CW  and degrees  -  so 360 -  then swap end and starts  - Process entities in DXFUtilsCs should already have handled ang_dir 
                             initial_start_angle = e.start_angle;
                             initial_end_angle = e.end_angle;
 
-                            start_angle = e.start_angle;
-                            end_angle = e.end_angle;
-
-                            if (angle_dir == 0)
-                            {
-                                //Angle dir ==0 = CCW definition of angles so need to convert to CW
-                                start_angle = 360.0d - start_angle;
-                                end_angle = 360.0d - end_angle;
-
-                                //drawing is upside down, so need to reflect arc in x axis
-                                start_angle = 360.0d - start_angle;
-                                end_angle = 360.0d - end_angle;
-
-                                sweep = end_angle - start_angle;
-
-                            }
+                            start_angle = 360.0d - initial_end_angle;  //Note swap....
+                            end_angle = 360.0d - initial_start_angle;
+                            if (end_angle < start_angle)
+                                sweep = (end_angle + 360.0) - start_angle;
                             else
-                            {
-                                //Angle dir ==1 = CW definition of angles 
-                                //drawing is upside down, so need to reflect arc in x axis
-                                start_angle = 360.0d - start_angle;
-                                end_angle = 360.0d - end_angle;
-
                                 sweep = end_angle - start_angle;
-                            }
 
                             graphics.DrawArc(whitePen, (float)(x1 - radius * scale_x), (float)(y1 - radius * scale_y), 2.0f * (float)(radius * scale_x), 2.0f * (float)(radius * scale_y), (float)start_angle, (float)sweep);
                         }
