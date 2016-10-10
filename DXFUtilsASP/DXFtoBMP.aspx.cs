@@ -435,10 +435,6 @@ namespace DXFUtilsASP
                             y2 = preview_height - ((e.y_end - center_y) * scale_y) - preview_height / 2;
                             graphics.DrawLine(whitePen, (float)x1, (float)y1, (float)x2, (float)y2);
 
-
-                            if (y1 < 0 || y2 < 0)
-                                angle_dir = 0;
-
                         }
 
                         if (e.type == "POINT")
