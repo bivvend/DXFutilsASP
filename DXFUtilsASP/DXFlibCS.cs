@@ -102,8 +102,6 @@ namespace DXFUtilsASP
             SplinePoints = new List<netDxf.Entities.SplineVertex>();
             SplineKnots = new List<double>();
 
-
-
         }
 
         //Method to parse DXF line by line when netDXFdll LoadDXF fails
