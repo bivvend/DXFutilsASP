@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="DXFtoBMP.aspx.cs" Inherits="DXFUtilsASP.DXFtoBMP" %>
 
+<%@ Register Src="~/User_Controls/DXF_Display_Control.ascx" TagPrefix="uc1" TagName="DXF_Display_Control" %>
+
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
@@ -55,15 +58,8 @@
                 <asp:Label ID="LabelSelectedLayer" runat="server" Text=" "></asp:Label>
             </p>
         </div>
-        <div class="col-md-4">
-            <h2>Preview</h2>
-            <p>
-                <asp:Label ID="Label5" runat="server" Text="Preview Image"></asp:Label>
-            </p>
-            <p>
-                <asp:Image ID="ImagePreview" runat="server" Height="600px" Width="600px" />
-            </p>
-        </div>
+
+        <uc1:DXF_Display_Control runat="server" ID="DXF_Display_Control" />
 
     </div>
     <hr />
@@ -71,6 +67,10 @@
         <div class="col-md-8">
             <h2>(3) Render Settings</h2>
             <p>
+                <p>
+                <asp:Label class="text_box_label" ID="Label5" runat="server" Text="File Name" ></asp:Label>
+                <asp:TextBox ID="TextBoxOutputFilename" runat="server">Output.tiff</asp:TextBox> <br />
+                </p>
                 <p>
                 <asp:Label class="text_box_label" ID="Label9" runat="server" Text="Layer" ></asp:Label>
                 <asp:TextBox ID="TextBoxSelectedLayer" runat="server">All</asp:TextBox> <br />
@@ -117,6 +117,7 @@
             </p>
             <p>
                 <asp:Button ID="ButtonRender" class="btn btn-primary" runat="server" Text="Render" OnClick="ButtonRender_Click" Width="245px"/>
+                <asp:Button ID="ButtonDownload" class="btn btn-primary" runat="server" Text="Download file" Width="245px" OnClick="ButtonDownload_Click" Visible="False"/>
             </p>
             <p>
                 <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>

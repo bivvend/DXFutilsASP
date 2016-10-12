@@ -121,6 +121,15 @@ namespace DXFUtilsASP {
         protected global::System.Web.UI.WebControls.Label LabelSelectedLayer;
         
         /// <summary>
+        /// DXF_Display_Control control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DXFUtilsASP.User_Controls.DXF_Display_Control DXF_Display_Control;
+        
+        /// <summary>
         /// Label5 control.
         /// </summary>
         /// <remarks>
@@ -130,13 +139,13 @@ namespace DXFUtilsASP {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// ImagePreview control.
+        /// TextBoxOutputFilename control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image ImagePreview;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxOutputFilename;
         
         /// <summary>
         /// Label9 control.
@@ -308,6 +317,15 @@ namespace DXFUtilsASP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonRender;
+        
+        /// <summary>
+        /// ButtonDownload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonDownload;
         
         /// <summary>
         /// LabelRenderWarning control.
