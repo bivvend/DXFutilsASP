@@ -11,8 +11,9 @@
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png" Width="150px" />
     </div>
     <hr /> 
-    
-<div class="row">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>    
+    <div class="row">
         <div class="col-md-8">
             <div>
                 <h2>
@@ -63,4 +64,9 @@
 
     </div>
     <hr />
+    </ContentTemplate>
+    <Triggers>
+        <asp:PostBackTrigger ControlID="ButtonUploadToServer" />
+    </Triggers>
+    </asp:UpdatePanel>
 </asp:Content>
