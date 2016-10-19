@@ -157,7 +157,7 @@ namespace DXFUtilsASP
 
             if (this.entity_list.Count > 0)
             {
-                DXF_Display_Control.Show_Bitmap();
+                DXF_Display_Control.Show_Bitmap(true);
             }
         }
     }

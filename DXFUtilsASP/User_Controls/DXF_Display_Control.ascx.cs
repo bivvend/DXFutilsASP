@@ -18,13 +18,16 @@ namespace DXFUtilsASP.User_Controls
         double dxf_min_x = 0.0d;
         double dxf_min_y = 0.0d;
         List<Entity> entity_list = new List<Entity>();
+        List<Tile> tile_list = new List<Tile>();
+
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        public void Show_Bitmap()
+        public void Show_Bitmap(bool show_grid)
         {
 
             Bitmap bitMap = new Bitmap(preview_width,preview_height);
@@ -32,11 +35,11 @@ namespace DXFUtilsASP.User_Controls
             try
             {
                 
-                bitMap = Make_Preview_BMP(Session["selected_layer"].ToString());
+                bitMap = Make_Preview_BMP(Session["selected_layer"].ToString(),show_grid);
             }
             catch
             {
-                bitMap = Make_Preview_BMP("All");
+                bitMap = Make_Preview_BMP("All", show_grid);
             }
 
             using (MemoryStream ms = new MemoryStream())
@@ -192,13 +195,22 @@ namespace DXFUtilsASP.User_Controls
             Session["dxf_min_y"] = dxf_min_y;
 
         }
-        private Bitmap Make_Preview_BMP(string selected_layer)
+        private Bitmap Make_Preview_BMP(string selected_layer, bool show_grid)
         {
             //read back session data
             dxf_max_x = (double)Session["dxf_max_x"];
             dxf_max_y = (double)Session["dxf_max_y"];
             dxf_min_x = (double)Session["dxf_min_x"];
             dxf_min_y = (double)Session["dxf_min_y"];
+
+            if(show_grid)
+            {
+                tile_list = (List<Tile>)Session["tile_list"];
+            }
+            else
+            {
+                tile_list = new List<Tile>();
+            }
 
             entity_list = (List<Entity>)Session["entity_list"];
 

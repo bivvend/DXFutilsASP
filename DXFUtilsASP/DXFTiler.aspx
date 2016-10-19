@@ -58,6 +58,37 @@
                 <asp:Button class="btn btn-primary" ID="ButtonPreview" runat="server" Text="Preview" OnClick="ButtonPreview_Click" />
                 <asp:Label ID="LabelSelectedLayer" runat="server" Text=" "></asp:Label>
             </p>
+            <h2>Grid Settings</h2>
+                <p>
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label5" runat="server" Text="Number X" ></asp:Label>
+                    <asp:TextBox ID="TextBoxNumberX" runat="server">2</asp:TextBox> <br />
+                    </p>
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label9" runat="server" Text="Number Y" ></asp:Label>
+                    <asp:TextBox ID="TextBoxNumberY" runat="server">2</asp:TextBox> <br />
+                    </p>
+
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label10" runat="server" Text="Pitch X(mm)" ></asp:Label>
+                    <asp:TextBox ID="TextBoxPitchX" runat="server">20.0</asp:TextBox> <br />
+                    </p>
+                
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label2" runat="server" Text="Pitch Y(mm)" ></asp:Label>
+                    <asp:TextBox ID="TextBoxPitchY" runat="server">20.0</asp:TextBox> <br />
+                    </p>
+
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label3" runat="server" Text="Center X(mm)" ></asp:Label>
+                    <asp:TextBox ID="TextBoxCenterX" runat="server">0.0</asp:TextBox> <br />
+                    </p>
+
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label4" runat="server" Text="Center Y(mm)" ></asp:Label>
+                    <asp:TextBox ID="TextBoxCenterY" runat="server">0.0</asp:TextBox> <br />
+                    </p>                    
+                </p>
         </div>
 
         <uc1:DXF_Display_Control runat="server" ID="DXF_Display_Control" />

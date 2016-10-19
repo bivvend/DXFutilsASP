@@ -408,6 +408,7 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Tile.cs" />
     <Compile Include="User_Controls\DXF_Display_Control.ascx.cs">
       <DependentUpon>DXF_Display_Control.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
