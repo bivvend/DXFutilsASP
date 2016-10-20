@@ -8,10 +8,10 @@ namespace DXFUtilsASP
 
     public class Tile
     {
-        double center_x { get; set; }
-        double center_y { get; set; }
-        double width { get; set; }
-        double height { get; set; }
+        public double center_x { get; set; }  
+        public double center_y { get; set; }
+        public double width { get; set; }
+        public double height { get; set; }
 
         public Tile()
         {

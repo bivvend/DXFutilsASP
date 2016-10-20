@@ -221,6 +221,10 @@ namespace DXFUtilsASP.User_Controls
             double x2 = 0.0d;
             double y1 = 0.0d;
             double y2 = 0.0d;
+            double width = 0.0d;
+            double scaled_width = 0.0d;
+            double scaled_height = 0.0d;
+            double height = 0.0d;
 
             double center_x = (dxf_max_x + dxf_min_x) / 2.0d;
             double center_y = (dxf_max_y + dxf_min_y) / 2.0d;
@@ -245,6 +249,7 @@ namespace DXFUtilsASP.User_Controls
             }
 
             Pen whitePen = new Pen(Color.White, 0.1f);
+            Pen orangePen = new Pen(Color.DarkOrange, 0.1f);
 
             // Draw line to screen.
             using (var graphics = Graphics.FromImage(a_bmp))
@@ -304,8 +309,23 @@ namespace DXFUtilsASP.User_Controls
                     }
                 }
 
+                //Draw grid
+                foreach(Tile a_tile in tile_list)
+                {
+                    width = a_tile.width;
+                    scaled_width = width * scale_x;                    
+                    height = a_tile.height;
+                    scaled_height = height * scale_y;
+                    x1 = (a_tile.center_x - center_x -( width / 2.0d)) * scale_x + preview_width / 2;
+                    y1 = preview_height - ((a_tile.center_y - center_y + (height/2.0d)) * scale_y) - preview_height / 2;
+
+                    graphics.DrawRectangle(orangePen, (float)x1, (float)y1, (float)scaled_width, (float)scaled_height);
+
+                }
+
             }
             whitePen.Dispose();
+            orangePen.Dispose();
             return a_bmp;
 
         }

@@ -16,6 +16,7 @@ namespace DXFUtilsASP
         string entity_file_storage = @"C:\DXFutilswebsite\Script_Storage\";
         List<string> current_layer_list = new List<string>();
         List<string> script_list = new List<string>();
+        List<Tile> tile_list = new List<Tile>();
         int line_count = 0;
         int arc_count = 0;
         int circle_count = 0;
@@ -138,6 +139,39 @@ namespace DXFUtilsASP
 
             if (entity_list == null)
                 return;
+
+            //generate Tiles
+             
+            tile_list.Clear(); //just in case
+            try
+            {
+                int number_in_x = Convert.ToInt32(TextBoxNumberX.Text);
+                int number_in_y = Convert.ToInt32(TextBoxNumberX.Text);
+                double pitch_x = Convert.ToDouble(TextBoxPitchX.Text);
+                double pitch_y = Convert.ToDouble(TextBoxPitchY.Text);
+                double center_x = Convert.ToDouble(TextBoxCenterX.Text);
+                double center_y = Convert.ToDouble(TextBoxCenterY.Text);
+
+                double tile_x = 0.0d;
+                double tile_y = 0.0d;
+
+                for (int x = 0; x < number_in_x; x++)
+                {
+                    for (int y = 0; y < number_in_y; y++)
+                    {
+                        //calculate positions of tiles
+                        tile_x = (pitch_x * (x - (number_in_x / 2) + 0.5d)) + center_x;
+                        tile_y = (pitch_y * (y - (number_in_y / 2) + 0.5d)) + center_y;
+                        tile_list.Add(new Tile(tile_x, tile_y, pitch_x, pitch_y));
+                    }
+                }
+
+                Session["tile_list"] = tile_list;
+            }
+            catch
+            {
+
+            }
 
             string selected_layer = "All";
 
