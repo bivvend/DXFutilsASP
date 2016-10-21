@@ -39,9 +39,15 @@
             <h2>Data from Loaded DXF:</h2>
             <p>
                 <asp:BulletedList ID="BulletedListDXFInfo" runat="server"></asp:BulletedList>
-            </p>
-            <p>
-                Note:  Polylines, LWPolylines and Splines converted to Arcs and Lines.  Blocks not currently handled.
+                <p>
+                </p>
+                <p>
+                    Note: Polylines, LWPolylines and Splines converted to Arcs and Lines. Blocks not currently handled.
+                </p>
+                <p>
+                </p>
+                <p>
+                </p>
             </p>
         </div>
     </div>
@@ -88,6 +94,12 @@
                     <asp:Label class="text_box_label" ID="Label4" runat="server" Text="Center Y(mm)" ></asp:Label>
                     <asp:TextBox ID="TextBoxCenterY" runat="server">0.0</asp:TextBox> <br />
                     </p>                    
+                    <p>
+                    </p>
+                    <p>
+                    </p>
+                    <p>
+                    </p>
                 </p>
         </div>
 
@@ -95,6 +107,109 @@
 
     </div>
     <hr />
+    <div class="row">        
+            <div class="col-md-8">
+                <h2>(3) Tiling Settings</h2>
+                <p>
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label6" runat="server" Text="Recipe Name" ></asp:Label>
+                    <asp:TextBox ID="TextBoxOutputFilename" runat="server">Recipe</asp:TextBox> <br />
+                    </p>
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label17" runat="server" Text="DXF version" ></asp:Label>
+                    <asp:DropDownList ID="DropDownListDXFVesrion" ForeColor="Black" runat="server"></asp:DropDownList>
+                    </p>
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label7" runat="server" Text="Layers (,)" ></asp:Label>
+                    <asp:TextBox ID="TextBoxSelectedLayer" runat="server">All</asp:TextBox> <br />
+                    </p>
+
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label11" runat="server" Text="Python script" ></asp:Label>
+                    <asp:TextBox ID="TextBoxSelectedScript" runat="server"></asp:TextBox> <br />
+                    </p>
+
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label8" runat="server" Text="Extensions (mm)" ></asp:Label>
+                    <asp:TextBox ID="TextBoxExtensionsMM" runat="server">0.0</asp:TextBox> <br />
+                    </p>
+
+                    <p>
+                        <asp:CheckBox ID="CheckBoxKnots" runat="server"/>
+                        <asp:Label class="checkbox label" ID="Label13" runat="server" Text=' Apply Knots?' ></asp:Label>
+                    </p>
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label12" runat="server" Text="Knot Type" ></asp:Label>
+                    <asp:TextBox ID="TextBoxKnotType" runat="server">None</asp:TextBox> <br />
+                    </p>
+
+                    <p>
+                        <asp:CheckBox ID="CheckBoxInvertX" runat="server"/>
+                        <asp:Label class="checkbox label" ID="Label14" runat="server" Text=' Invert X' ></asp:Label>
+                    </p>
+
+                    <p>
+                        <asp:CheckBox ID="CheckBoxInvertY" runat="server"/>
+                        <asp:Label class="checkbox label" ID="Label15" runat="server" Text=' Invert Y Coordinates' ></asp:Label>
+                    </p>
+
+                    <p>
+                        <asp:CheckBox ID="CheckBoxConvertToChords" runat="server"/>
+                        <asp:Label class="checkbox label" ID="Label16" runat="server" Text=' Convert curves' ></asp:Label>
+                    </p>
+                    <p>
+                    </p>
+                    <p>
+                        <asp:Button ID="ButtonRender" runat="server" class="btn btn-primary" Text="Run Script" Width="245px" OnClick="ButtonRender_Click" />
+                        <asp:Button ID="ButtonDownload" runat="server" class="btn btn-primary" Text="Download zip file" Visible="False" Width="245px" OnClick="ButtonDownload_Click" />
+                    </p>
+                    <p>
+                        <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
+                    </p>
+                    <p>
+                    </p>
+                    <p>
+                    </p>
+                    <p>
+                    </p>
+                    <p>
+                    </p>
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Rendering scripts</h2>
+                <p>
+                    <p>
+                        <asp:Label ID="Label18" runat="server" Text="Script list"></asp:Label>
+                    </p>
+                    <p>
+                        <asp:ListBox ID="ListBoxScripts" runat="server" Width="283px" ForeColor="Black" Height="128px"></asp:ListBox>
+                    <p>
+                        <asp:Button ID="ButtonSelectScript" class="btn btn-primary" runat="server" Text="Select Script" OnClick="ButtonSelectScript_Click" Width="280px" />
+                    </p>    
+                        <p>
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
+                </p>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Script Output</h2>
+                <p>
+                    <asp:TextBox ID="TextBoxScriptOutput" runat="server" TextMode="MultiLine" Height="331px" Width="611px"></asp:TextBox>
+                </p>      
+            </div>
+        </div>
     </ContentTemplate>
     <Triggers>
         <asp:PostBackTrigger ControlID="ButtonUploadToServer" />

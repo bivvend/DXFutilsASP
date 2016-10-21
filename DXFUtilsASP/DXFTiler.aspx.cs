@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace DXFUtilsASP
 {
@@ -11,7 +14,7 @@ namespace DXFUtilsASP
     {
         List<Entity> entity_list = new List<Entity>();
         string upload_location = @"C:\DXFutilswebsite\Uploads\";
-        string script_location = @"C:\DXFutilswebsite\Scripts";
+        string script_location = @"C:\DXFutilswebsite\Tiling_Scripts";
         string python_location = @"C:\Python\Python34-64bit\WinPython-64bit-3.4.2.4\python-3.4.2.amd64\python.exe";
         string entity_file_storage = @"C:\DXFutilswebsite\Script_Storage\";
         List<string> current_layer_list = new List<string>();
@@ -24,7 +27,46 @@ namespace DXFUtilsASP
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            LabelWarn.Visible = false;
+            string a_name = "";
+            //this.ListBoxScripts.Items.Clear();
+            //find available scripts
+            bool new_item = true;
 
+            DropDownListDXFVesrion.Items.Add("R12");
+            DropDownListDXFVesrion.Items.Add("R2000");
+            DropDownListDXFVesrion.Items.Add("R2004");
+            DropDownListDXFVesrion.Items.Add("R2007");
+            DropDownListDXFVesrion.Items.Add("R2010");
+            DropDownListDXFVesrion.Items.Add("R2013");
+            DropDownListDXFVesrion.Items.Add("Unstructured");
+            //# AC1009	R12
+            //# AC1015	R2000
+            //# AC1018	R2004
+            //# AC1021	R2007
+            //# AC1024	R2010
+            //# AC1027	R2013 
+            if (Directory.Exists(script_location))
+            {
+                script_list = Directory.GetFiles(script_location).ToList();
+                foreach (string a_path in script_list)
+                {
+                    new_item = true;
+                    FileInfo info = new FileInfo(a_path);
+                    if (info.Name.Contains(".py"))
+                    {
+                        a_name = info.Name;
+                        foreach (ListItem item in ListBoxScripts.Items)
+                        {
+                            if (item.Value == a_name)
+                                new_item = false;
+                        }
+                        if (new_item)
+                            this.ListBoxScripts.Items.Add(a_name);
+                    }
+
+                }
+            }
         }
 
         List<string> Get_Layer_List()
@@ -192,6 +234,145 @@ namespace DXFUtilsASP
             if (this.entity_list.Count > 0)
             {
                 DXF_Display_Control.Show_Bitmap(true);
+            }
+        }
+
+        protected void ButtonRender_Click(object sender, EventArgs e)
+        {
+            Session["selected_script"] = script_location + @"\" + TextBoxSelectedScript.Text;
+            string script = Session["selected_script"].ToString();
+            string layer_name = TextBoxSelectedLayer.Text;
+
+            if (script == null)
+                return;
+
+            bool invert_x = CheckBoxInvertX.Checked;
+            bool invert_y = CheckBoxInvertY.Checked;
+            bool add_knots = CheckBoxKnots.Checked;
+
+            if (File.Exists(script))
+            {
+                Save_Data("All");
+                string args = script;  //sys.argv[0]
+                //input_file = str(sys.argv[1])
+                //args += " " + Session["data_file"].ToString();
+
+                run_script(python_location, args);
+            }
+            else
+            {
+                LabelRenderWarning.Text = "Script not found";
+                return;
+            }
+            try
+            {
+                if (TextBoxScriptOutput.Text.Contains("SCRIPT_SUCCESS"))
+                {
+                    LabelRenderWarning.Text = "SCRIPT_SUCCESS -  Render complete";
+                    ButtonDownload.Visible = true;
+
+                }
+                else
+                {
+                    LabelRenderWarning.Text = "SCRIPT_FAIL -  Render failed";
+                    ButtonDownload.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LabelRenderWarning.Text = ex.ToString();
+            }
+        }
+
+        protected void ButtonDownload_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonSelectScript_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Session["selected_script"] = script_location + @"\" + ListBoxScripts.SelectedValue;
+                TextBoxSelectedScript.Text = ListBoxScripts.SelectedValue;
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void run_script(string python_exe, string args)
+        {
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = python_exe;//full path to python.exe
+            start.Arguments = args;//args is path to .py file and any cmd line args
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            TextBoxScriptOutput.Text = "";
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    TextBoxScriptOutput.Text = result;
+                }
+            }
+        }
+
+        private void Save_Data(string layer_name)
+        {
+            Random random = new Random();
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string rand_name = new string(Enumerable.Repeat(chars, 6)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            try
+            {
+                entity_list = (List<Entity>)Session["entity_list"];
+                string filename = entity_file_storage + rand_name + ".csv";
+                Session["data_file"] = filename;
+                if (TextBoxOutputFilename.Text.Contains(".zip"))
+                {
+                    Session["output_file_name"] = TextBoxOutputFilename.Text;
+                }
+                else
+                {
+                    Session["output_file_name"] = "TileCollection.zip";
+                }
+                string to_write = "";
+
+                FileStream fs = File.Open(filename, FileMode.Create);
+                StreamWriter writer = new StreamWriter(fs);
+
+                //get properties from Entity object
+                PropertyInfo[] properties = null;
+
+
+                foreach (Entity e in entity_list)
+                {
+                    if (e.layer == layer_name || layer_name == "All")
+                    {
+                        properties = e.GetType().GetProperties();
+                        foreach (PropertyInfo pi in properties)
+                        {
+                            to_write += pi.GetValue(e, null).ToString() + ",";
+                        }
+
+                        writer.WriteLine(to_write);
+                        to_write = "";
+                    }
+                }
+
+                writer.Flush();
+                writer.Close();
+                fs.Close();
+            }
+
+            catch
+            {
+                return;
             }
         }
     }

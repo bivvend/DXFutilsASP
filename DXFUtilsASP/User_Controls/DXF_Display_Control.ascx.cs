@@ -18,9 +18,7 @@ namespace DXFUtilsASP.User_Controls
         double dxf_min_x = 0.0d;
         double dxf_min_y = 0.0d;
         List<Entity> entity_list = new List<Entity>();
-        List<Tile> tile_list = new List<Tile>();
-
-        
+        List<Tile> tile_list = new List<Tile>();        
 
         protected void Page_Load(object sender, EventArgs e)
         {
