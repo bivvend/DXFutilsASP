@@ -3,5 +3,5 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
     <h3>DXF Utilities.</h3>
-    <p>Hosted utilites wriiten by Simon Henley and Leon Bisset.</p>
+    <p>Hosted utilites written by Simon Henley and Leon Bisset.</p>
 </asp:Content>

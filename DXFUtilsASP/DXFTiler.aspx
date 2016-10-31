@@ -142,6 +142,10 @@
                     <asp:Label class="text_box_label" ID="Label12" runat="server" Text="Knot Type" ></asp:Label>
                     <asp:TextBox ID="TextBoxKnotType" runat="server">None</asp:TextBox> <br />
                     </p>
+                    <p>
+                    <asp:Label class="text_box_label" ID="Label19" runat="server" Text="Knot Size(mm)" ></asp:Label>
+                    <asp:TextBox ID="TextBoxKnotSize" runat="server">0.1</asp:TextBox> <br />
+                    </p>
 
                     <p>
                         <asp:CheckBox ID="CheckBoxInvertX" runat="server"/>

@@ -32,20 +32,23 @@ namespace DXFUtilsASP
             //this.ListBoxScripts.Items.Clear();
             //find available scripts
             bool new_item = true;
-
-            DropDownListDXFVesrion.Items.Add("R12");
-            DropDownListDXFVesrion.Items.Add("R2000");
-            DropDownListDXFVesrion.Items.Add("R2004");
-            DropDownListDXFVesrion.Items.Add("R2007");
-            DropDownListDXFVesrion.Items.Add("R2010");
-            DropDownListDXFVesrion.Items.Add("R2013");
-            DropDownListDXFVesrion.Items.Add("Unstructured");
-            //# AC1009	R12
-            //# AC1015	R2000
-            //# AC1018	R2004
-            //# AC1021	R2007
-            //# AC1024	R2010
-            //# AC1027	R2013 
+            if (!Page.IsPostBack)
+            {
+                DropDownListDXFVesrion.Items.Clear();
+                DropDownListDXFVesrion.Items.Add("R12");
+                DropDownListDXFVesrion.Items.Add("R2000");
+                DropDownListDXFVesrion.Items.Add("R2004");
+                DropDownListDXFVesrion.Items.Add("R2007");
+                DropDownListDXFVesrion.Items.Add("R2010");
+                DropDownListDXFVesrion.Items.Add("R2013");
+                DropDownListDXFVesrion.Items.Add("Unstructured");
+                //# AC1009	R12
+                //# AC1015	R2000
+                //# AC1018	R2004
+                //# AC1021	R2007
+                //# AC1024	R2010
+                //# AC1027	R2013 
+            }
             if (Directory.Exists(script_location))
             {
                 script_list = Directory.GetFiles(script_location).ToList();
@@ -245,17 +248,85 @@ namespace DXFUtilsASP
 
             if (script == null)
                 return;
+            string DXF_format = DropDownListDXFVesrion.SelectedValue;
 
             bool invert_x = CheckBoxInvertX.Checked;
+            string invert_x_str = "False";
+            if (invert_x)
+                invert_x_str = "True";
+
             bool invert_y = CheckBoxInvertY.Checked;
+            string invert_y_str = "False";
+            if (invert_y)
+                invert_y_str = "True";
+
             bool add_knots = CheckBoxKnots.Checked;
+            string add_knots_str = "False";
+            if (add_knots)
+                add_knots_str = "True";
+
+            bool convert_curves = CheckBoxConvertToChords.Checked;
+            string convert_curves_str = "False";
+            if (convert_curves)
+                convert_curves_str = "True";
+
+            string number_in_x = TextBoxNumberX.Text;
+            string number_in_y = TextBoxNumberY.Text;
+
+            string pitch_x = TextBoxPitchX.Text;
+            string pitch_y = TextBoxPitchY.Text;
+
+            string center_x = TextBoxCenterX.Text;
+            string center_y= TextBoxCenterY.Text;
+
+            string knot_type = TextBoxKnotType.Text;
+            string knot_size = TextBoxKnotSize.Text;
+
+            string route_output_filename = TextBoxOutputFilename.Text;
+
+            string extend_length = TextBoxExtensionsMM.Text;
+            
+            
 
             if (File.Exists(script))
             {
                 Save_Data("All");
                 string args = script;  //sys.argv[0]
                 //input_file = str(sys.argv[1])
-                //args += " " + Session["data_file"].ToString();
+                args += " " + Session["data_file"].ToString();
+                // layer_name = str(sys.argv[2])
+                args += " " + layer_name;
+                // number_in_x = int(sys.argv[3])
+                args += " " + number_in_x;
+                // number_in_y = int(sys.argv[4])
+                args += " " + number_in_y;
+                // tile_pitch_x = float(sys.argv[5])
+                args += " " + pitch_x;
+                // tile_pitch_y = float(sys.argv[6])
+                args += " " + pitch_y;
+                // center_x = float(sys.argv[7])
+                args += " " + center_x;
+                // center_y = float(sys.argv[8])
+                args += " " + center_y;
+                // root_output_filename = str(sys.argv[9])
+                args += " " + route_output_filename;
+                // dxf_format = str(sys.argv[10])
+                args += " " + DXF_format;
+                // extend_length = float(sys.argv[11])
+                args += " " + extend_length;
+                // knot_style = str(sys.argv[12])
+                args += " " + knot_type;
+                // knot_size = float(sys.argv[13])
+                args += " " + knot_size;
+                // convert_to_chords = bool(sys.argv[14]=="True")
+                args += " " + convert_curves_str;
+                // invert_x = bool(sys.argv[15]=="True")
+                args += " " + invert_x_str;
+                // invert_y= bool(sys.argv[16]=="True")
+                args += " " + invert_y_str;
+                // TNx_type = bool(sys.argv[17])
+                args += " " + "False";
+                // output_dir = str(sys.argv[18])
 
                 run_script(python_location, args);
             }
