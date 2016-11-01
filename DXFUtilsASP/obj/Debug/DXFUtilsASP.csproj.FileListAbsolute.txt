@@ -131,3 +131,4 @@ D:\Github\DXFutilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.csprojResolveAssemblyRef
 D:\Github\DXFutilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.dll
 D:\Github\DXFutilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.pdb
 D:\Github\DXFutilsASP\DXFUtilsASP\bin\netDxf.xml
+C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.csprojResolveAssemblyReference.cache
