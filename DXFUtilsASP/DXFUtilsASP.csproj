@@ -230,6 +230,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="TNxTiler.aspx" />
     <Content Include="User_Controls\DXF_Display_Control.ascx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -413,6 +414,13 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="TNxTiler.aspx.cs">
+      <DependentUpon>TNxTiler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TNxTiler.aspx.designer.cs">
+      <DependentUpon>TNxTiler.aspx</DependentUpon>
+    </Compile>
     <Compile Include="User_Controls\DXF_Display_Control.ascx.cs">
       <DependentUpon>DXF_Display_Control.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

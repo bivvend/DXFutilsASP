@@ -17,6 +17,7 @@ namespace DXFUtilsASP
         string script_location = @"C:\DXFutilswebsite\Tiling_Scripts";
         string python_location = @"C:\Python\Python34-64bit\WinPython-64bit-3.4.2.4\python-3.4.2.amd64\python.exe";
         string entity_file_storage = @"C:\DXFutilswebsite\Script_Storage\";
+        string tile_set_storage_location = @"C:\DXFutilswebsite\Tile_Set_Storage\";
         List<string> current_layer_list = new List<string>();
         List<string> script_list = new List<string>();
         List<Tile> tile_list = new List<Tile>();
@@ -280,13 +281,17 @@ namespace DXFUtilsASP
             string center_y= TextBoxCenterY.Text;
 
             string knot_type = TextBoxKnotType.Text;
+            if (!add_knots)
+                knot_type = "None";
+
             string knot_size = TextBoxKnotSize.Text;
 
-            string route_output_filename = TextBoxOutputFilename.Text;
+            string root_output_filename = TextBoxOutputFilename.Text;
 
             string extend_length = TextBoxExtensionsMM.Text;
-            
-            
+
+            string mscan_dxf_dir = TextBoxMScanDir.Text;
+
 
             if (File.Exists(script))
             {
@@ -309,7 +314,7 @@ namespace DXFUtilsASP
                 // center_y = float(sys.argv[8])
                 args += " " + center_y;
                 // root_output_filename = str(sys.argv[9])
-                args += " " + route_output_filename;
+                args += " " + root_output_filename;
                 // dxf_format = str(sys.argv[10])
                 args += " " + DXF_format;
                 // extend_length = float(sys.argv[11])
@@ -327,6 +332,9 @@ namespace DXFUtilsASP
                 // TNx_type = bool(sys.argv[17])
                 args += " " + "False";
                 // output_dir = str(sys.argv[18])
+                args += " " + tile_set_storage_location + root_output_filename;
+                //m_scan_dxf_dir = str(sys.argv[19])
+                args += " " + mscan_dxf_dir;
 
                 run_script(python_location, args);
             }
@@ -357,7 +365,23 @@ namespace DXFUtilsASP
 
         protected void ButtonDownload_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                //LabelRenderWarning.Text = "SCRIPT_SUCCESS -  Render complete";
+                System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+                response.ClearContent();
+                response.Clear();
+                response.ContentType = "application/octet-stream";
+                string filepath = Session["output_file_name"].ToString();
+                response.AddHeader("Content-Disposition", "attachment; filename=" + Session["root_of_filename"].ToString()+".zip" + ";");
+                response.TransmitFile(filepath);
+                response.Flush();
+                response.End();
+            }
+            catch (Exception ex)
+            {
+                LabelRenderWarning.Text = "Download exception " + ex.ToString();
+            }
         }
 
         protected void ButtonSelectScript_Click(object sender, EventArgs e)
@@ -404,14 +428,9 @@ namespace DXFUtilsASP
                 entity_list = (List<Entity>)Session["entity_list"];
                 string filename = entity_file_storage + rand_name + ".csv";
                 Session["data_file"] = filename;
-                if (TextBoxOutputFilename.Text.Contains(".zip"))
-                {
-                    Session["output_file_name"] = TextBoxOutputFilename.Text;
-                }
-                else
-                {
-                    Session["output_file_name"] = "TileCollection.zip";
-                }
+                Session["output_file_name"] = tile_set_storage_location + TextBoxOutputFilename.Text + @"\" + TextBoxOutputFilename.Text + ".zip";
+                Session["root_of_filename"] = TextBoxOutputFilename.Text;
+
                 string to_write = "";
 
                 FileStream fs = File.Open(filename, FileMode.Create);

@@ -43,9 +43,7 @@
                 </p>
                 <p>
                     Note: Polylines, LWPolylines and Splines converted to Arcs and Lines. Blocks not currently handled.
-                </p>
-                <p>
-                </p>
+                </p>                
                 <p>
                 </p>
             </p>
@@ -162,6 +160,10 @@
                         <asp:Label class="checkbox label" ID="Label16" runat="server" Text=' Convert curves' ></asp:Label>
                     </p>
                     <p>
+                    <asp:Label class="text_box_label" ID="Label20" runat="server" Text="MScan DXF dir. " ></asp:Label>
+                    <asp:TextBox ID="TextBoxMScanDir" runat="server">C:\Programs\Recipe</asp:TextBox> <br />
+                    </p>
+                    <p>
                     </p>
                     <p>
                         <asp:Button ID="ButtonRender" runat="server" class="btn btn-primary" Text="Run Script" Width="245px" OnClick="ButtonRender_Click" />
@@ -217,6 +219,7 @@
     </ContentTemplate>
     <Triggers>
         <asp:PostBackTrigger ControlID="ButtonUploadToServer" />
+        <asp:PostBackTrigger ControlID="ButtonDownload" />
     </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
