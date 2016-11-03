@@ -42,7 +42,6 @@ namespace DXFUtilsASP
                 DropDownListDXFVesrion.Items.Add("R2007");
                 DropDownListDXFVesrion.Items.Add("R2010");
                 DropDownListDXFVesrion.Items.Add("R2013");
-                DropDownListDXFVesrion.Items.Add("Unstructured");
                 //# AC1009	R12
                 //# AC1015	R2000
                 //# AC1018	R2004
@@ -120,11 +119,13 @@ namespace DXFUtilsASP
                     {
                         FileUploadDXF_TO_BMP.SaveAs(upload_location +
                              FileUploadDXF_TO_BMP.FileName);
+                        Session["uploaded_dxf_location"] = upload_location +
+                             FileUploadDXF_TO_BMP.FileName;
                         LabelWarn.Text = "File name: " +
-                            FileUploadDXF_TO_BMP.PostedFile.FileName + "<br>" +
+                             FileUploadDXF_TO_BMP.PostedFile.FileName + "<br>" +
                              FileUploadDXF_TO_BMP.PostedFile.ContentLength + " kb<br>" +
                              "Content type: " +
-                            FileUploadDXF_TO_BMP.PostedFile.ContentType;
+                             FileUploadDXF_TO_BMP.PostedFile.ContentType;
                         LabelWarn.Visible = true;
                         //Convert DXF to entity list
                         entity_list = DXFlibCS.Extract_Vectors(upload_location + FileUploadDXF_TO_BMP.FileName, "All");
@@ -179,9 +180,125 @@ namespace DXFUtilsASP
             }
         }
 
+        private void Save_Data(string layer_name)
+        {
+            try
+            {
+                Session["output_file_name"] = tile_set_storage_location + TextBoxOutputFilename.Text + @"\" + TextBoxOutputFilename.Text + ".zip";
+                Session["root_of_filename"] = TextBoxOutputFilename.Text;
+            }
+            catch
+            {
+                return;
+            }
+        }
+
         protected void ButtonRender_Click(object sender, EventArgs e)
         {
+            Session["selected_script"] = script_location + @"\" + TextBoxSelectedScript.Text;
+            string script = Session["selected_script"].ToString();
+            
 
+            if (script == null)
+                return;
+
+            //input_file = str(sys.argv[1])
+            string input_file = Session["uploaded_dxf_location"].ToString();
+            //layer_string = str(sys.argv[2])
+            string layer_name = TextBoxSelectedLayer.Text;
+            //root_output_filename = str(sys.argv[3])
+            string root_output_filename = TextBoxOutputFilename.Text;
+            //dxf_format = str(sys.argv[4])
+            string DXF_format = DropDownListDXFVesrion.SelectedValue;
+            //invert_x = bool(sys.argv[5] == "True")
+            bool invert_x = CheckBoxInvertX.Checked;
+            string invert_x_str = "False";
+            if (invert_x)
+                invert_x_str = "True";
+            //invert_y = bool(sys.argv[6] == "True")
+            bool invert_y = CheckBoxInvertY.Checked;
+            string invert_y_str = "False";
+            if (invert_y)
+                invert_y_str = "True";
+            //output_dir = str(sys.argv[7])
+            string output_dir = tile_set_storage_location + root_output_filename;
+            //m_scan_dxf_dir = str(sys.argv[8])   #location where MScan looks for files
+            string mscan_dxf_dir = TextBoxMScanDir.Text;
+            //lines_only = bool(sys.argv[9] == "True")
+            bool convert_lines = CheckBoxConvertToLines.Checked;
+            string convert_lines_str = "False";
+            if (convert_lines)
+                convert_lines_str = "True";         
+
+            
+
+
+            if (File.Exists(script))
+            {
+                Save_Data("All");
+                string args = script;  //sys.argv[0]
+                //input_file = str(sys.argv[1])
+                args += " " + input_file;
+                //layer_string = str(sys.argv[2])
+                args += " " + layer_name;
+                //root_output_filename = str(sys.argv[3])
+                args += " " + root_output_filename;
+                //dxf_format = str(sys.argv[4])
+                args += " " + DXF_format;
+                //invert_x = bool(sys.argv[5] == "True")
+                args += " " + invert_x_str;
+                //invert_y = bool(sys.argv[6] == "True")
+                args += " " + invert_y_str;
+                //output_dir = str(sys.argv[7])
+                args += " " + output_dir;
+                //m_scan_dxf_dir = str(sys.argv[8])   #location where MScan looks for files
+                args += " " + mscan_dxf_dir;
+                //lines_only = bool(sys.argv[9] == "True")
+                args += " " + convert_lines_str;
+
+                run_script(python_location, args);
+            }
+            else
+            {
+                LabelRenderWarning.Text = "Script not found";
+                return;
+            }
+            try
+            {
+                if (TextBoxScriptOutput.Text.Contains("SCRIPT_SUCCESS"))
+                {
+                    LabelRenderWarning.Text = "SCRIPT_SUCCESS -  Render complete";
+                    ButtonDownload.Visible = true;
+
+                }
+                else
+                {
+                    LabelRenderWarning.Text = "SCRIPT_FAIL -  Render failed";
+                    ButtonDownload.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LabelRenderWarning.Text = ex.ToString();
+            }
+        }
+
+        private void run_script(string python_exe, string args)
+        {
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = python_exe;//full path to python.exe
+            start.Arguments = args;//args is path to .py file and any cmd line args
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            TextBoxScriptOutput.Text = "";
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    TextBoxScriptOutput.Text = result;
+                }
+            }
         }
 
         protected void ButtonDownload_Click(object sender, EventArgs e)
