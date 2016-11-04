@@ -8,7 +8,18 @@
     <div class="jumbotron">
         <h1>DXF Tiler</h1>
         <p class="lead">Routines for converting DXF files to sets of tiles</p>
-        <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png" Width="150px" />
+        <table>
+            <tr>
+                <td rowspan="2"><asp:Image ID="Image6" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png"  Width="150px" /></td>
+                <td><asp:Image ID="Image2" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png" Width="60px" /></td>
+                <td><asp:Image ID="Image3" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png" Width="60px" /></td>
+            </tr>
+            <tr>
+                <td><asp:Image ID="Image4" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png" Width="60px" /></td>
+                <td><asp:Image ID="Image5" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png" Width="60px" /></td>
+
+            </tr>
+        </table>
     </div>
     <hr /> 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">

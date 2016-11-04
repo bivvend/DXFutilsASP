@@ -54,6 +54,7 @@
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/DXFTiler">DXF Tiler</a></li>  
                         <li><a runat="server" href="~/DXFtoBMP">DXF to BMP</a></li>
+                        <li><a runat="server" href="~/TNxTiler">Touchnetix Tiler</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>                 
 

@@ -303,7 +303,23 @@ namespace DXFUtilsASP
 
         protected void ButtonDownload_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                //LabelRenderWarning.Text = "SCRIPT_SUCCESS -  Render complete";
+                System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+                response.ClearContent();
+                response.Clear();
+                response.ContentType = "application/octet-stream";
+                string filepath = Session["output_file_name"].ToString();
+                response.AddHeader("Content-Disposition", "attachment; filename=" + Session["root_of_filename"].ToString() + ".zip" + ";");
+                response.TransmitFile(filepath);
+                response.Flush();
+                response.End();
+            }
+            catch (Exception ex)
+            {
+                LabelRenderWarning.Text = "Download exception " + ex.ToString();
+            }
         }
 
         protected void ButtonSelectScript_Click(object sender, EventArgs e)
@@ -316,6 +332,25 @@ namespace DXFUtilsASP
             catch
             {
 
+            }
+        }
+
+        protected void ButtonAddLayer_Click(object sender, EventArgs e)
+        {
+            string layer_to_add = ListBoxLayers.SelectedValue;
+            if (layer_to_add == null || layer_to_add == "")
+                return;
+            else
+            {
+                if (TextBoxSelectedLayer.Text.Trim() == "" || TextBoxSelectedLayer.Text.Contains("All"))
+                {
+                    TextBoxSelectedLayer.Text = layer_to_add;
+                }
+                else
+                {
+                    if(!TextBoxSelectedLayer.Text.Contains(layer_to_add))
+                        TextBoxSelectedLayer.Text += "," + layer_to_add.Trim();
+                }
             }
         }
     }
