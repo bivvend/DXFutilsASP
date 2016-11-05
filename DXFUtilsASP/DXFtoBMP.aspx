@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="DXFtoBMP.aspx.cs" Inherits="DXFUtilsASP.DXFtoBMP" %>
 
 <%@ Register Src="~/User_Controls/DXF_Display_Control.ascx" TagPrefix="uc1" TagName="DXF_Display_Control" %>
+<%@ Register Src="~/User_Controls/WaitSpinner.ascx" TagPrefix="uc1" TagName="WaitSpinner" %>
+
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -127,6 +129,11 @@
                     <p>
                         <asp:Button ID="ButtonRender" runat="server" class="btn btn-primary" OnClick="ButtonRender_Click" Text="Render" Width="245px" />
                         <asp:Button ID="ButtonDownload" runat="server" class="btn btn-primary" OnClick="ButtonDownload_Click" Text="Download file" Visible="False" Width="245px" />
+                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                        <ProgressTemplate>
+                            <uc1:WaitSpinner runat="server" ID="WaitSpinner" />
+                        </ProgressTemplate>
+                        </asp:UpdateProgress>
                     </p>
                     <p>
                         <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>

@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="DXFTiler.aspx.cs" Inherits="DXFUtilsASP.DXFTiler" %>
 
 <%@ Register Src="~/User_Controls/DXF_Display_Control.ascx" TagPrefix="uc1" TagName="DXF_Display_Control" %>
+<%@ Register Src="~/User_Controls/WaitSpinner.ascx" TagPrefix="uc1" TagName="WaitSpinner" %>
+
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -57,6 +59,8 @@
                 </p>                
                 <p>
                 </p>
+                <p>
+                </p>
             </p>
         </div>
     </div>
@@ -103,6 +107,8 @@
                     <asp:Label class="text_box_label" ID="Label4" runat="server" Text="Center Y(mm)" ></asp:Label>
                     <asp:TextBox ID="TextBoxCenterY" runat="server">0.0</asp:TextBox> <br />
                     </p>                    
+                    <p>
+                    </p>
                     <p>
                     </p>
                     <p>
@@ -179,17 +185,26 @@
                     <p>
                         <asp:Button ID="ButtonRender" runat="server" class="btn btn-primary" Text="Run Script" Width="245px" OnClick="ButtonRender_Click" />
                         <asp:Button ID="ButtonDownload" runat="server" class="btn btn-primary" Text="Download zip file" Visible="False" Width="245px" OnClick="ButtonDownload_Click" />
-                    </p>
-                    <p>
-                        <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
-                    </p>
-                    <p>
-                    </p>
-                    <p>
-                    </p>
-                    <p>
-                    </p>
-                    <p>
+                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                        <ProgressTemplate>
+                            <uc1:WaitSpinner runat="server" ID="WaitSpinner" />
+                        </ProgressTemplate>
+                        </asp:UpdateProgress>
+                        <p>
+                        </p>
+                        <p>
+                            <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
                     </p>
                 </p>
             </div>
@@ -205,6 +220,8 @@
                     <p>
                         <asp:Button ID="ButtonSelectScript" class="btn btn-primary" runat="server" Text="Select Script" OnClick="ButtonSelectScript_Click" Width="280px" />
                     </p>    
+                        <p>
+                        </p>
                         <p>
                         </p>
                         <p>

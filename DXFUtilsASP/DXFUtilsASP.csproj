@@ -185,6 +185,7 @@
     <Content Include="Content\Images\BMP-512.png" />
     <Content Include="Content\Images\dxf-icon-transparent.png" />
     <Content Include="Content\Images\Logo.bmp" />
+    <Content Include="Content\Images\PleaseWait.gif" />
     <Content Include="Content\Site.css" />
     <Content Include="DXFTiler.aspx" />
     <Content Include="DXFtoBMP.aspx" />
@@ -232,8 +233,11 @@
     <Content Include="Site.Master" />
     <Content Include="TNxTiler.aspx" />
     <Content Include="User_Controls\DXF_Display_Control.ascx" />
+    <Content Include="User_Controls\WaitSpinner.ascx" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -427,6 +431,13 @@
     </Compile>
     <Compile Include="User_Controls\DXF_Display_Control.ascx.designer.cs">
       <DependentUpon>DXF_Display_Control.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="User_Controls\WaitSpinner.ascx.cs">
+      <DependentUpon>WaitSpinner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User_Controls\WaitSpinner.ascx.designer.cs">
+      <DependentUpon>WaitSpinner.ascx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

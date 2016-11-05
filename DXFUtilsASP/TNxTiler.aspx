@@ -1,10 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="TNxTiler.aspx.cs" Inherits="DXFUtilsASP.TNxTiler" %>
 
+<%@ Register Src="~/User_Controls/WaitSpinner.ascx" TagPrefix="uc1" TagName="WaitSpinner" %>
+
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
         <h1>Touchnetix Recipe Tiler</h1>
-        <p class="lead">Routines for splitting Touchnetix DXF files to tiles </p>
+        <p class="lead">Routines for splitting Touchnetix DXF files into tiles </p>
         <table>
             <tr>
                 <td rowspan="2"><asp:Image ID="Image6" runat="server" ImageUrl="~/Content/Images/dxf-icon-transparent.png"  Width="150px" /></td>
@@ -51,7 +54,7 @@
                     <p>
                     </p>
                     <p>
-                        Note: Polylines, LWPolylines and Splines converted to Arcs and Lines. Blocks not currently handled.
+                        Note: Polylines, LWPolylines and Splines converted to Arcs and Lines. Entities in Blocks not counted.
                     </p>
                     <p>
                         <asp:Label ID="Label21" runat="server" Text="Layer List"></asp:Label>
@@ -109,6 +112,11 @@
                     <p>
                         <asp:Button ID="ButtonRender" runat="server" class="btn btn-primary" Text="Run Script" Width="245px" OnClick="ButtonRender_Click" />
                         <asp:Button ID="ButtonDownload" runat="server" class="btn btn-primary" Text="Download zip file" Visible="False" Width="245px" OnClick="ButtonDownload_Click" />
+                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                        <ProgressTemplate>
+                            <uc1:WaitSpinner runat="server" id="WaitSpinner" />
+                        </ProgressTemplate>
+                        </asp:UpdateProgress>
                     </p>
                     <p>
                         <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
@@ -152,4 +160,5 @@
         <asp:PostBackTrigger ControlID="ButtonDownload" />
     </Triggers>
     </asp:UpdatePanel>
+
 </asp:Content>
