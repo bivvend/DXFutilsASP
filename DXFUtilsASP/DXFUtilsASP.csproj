@@ -168,6 +168,7 @@
     <Content Include="Account\ManageLogins.aspx" />
     <Content Include="Account\ManagePassword.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="Account\Recipe_Management.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Account\ResetPassword.aspx" />
@@ -177,6 +178,10 @@
     <Content Include="App_Data\DXFUtils-UserDB.mdf" />
     <Content Include="App_Data\DXFUtils-UserDB_log.ldf">
       <DependentUpon>DXFUtils-UserDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\Recipe_Database.mdf" />
+    <Content Include="App_Data\Recipe_Database_log.ldf">
+      <DependentUpon>Recipe_Database.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap OLD.css" />
@@ -313,6 +318,13 @@
     </Compile>
     <Compile Include="Account\OpenAuthProviders.ascx.designer.cs">
       <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Recipe_Management.aspx.cs">
+      <DependentUpon>Recipe_Management.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Recipe_Management.aspx.designer.cs">
+      <DependentUpon>Recipe_Management.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
