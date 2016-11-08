@@ -15,7 +15,8 @@ namespace DXFUtilsASP
         List<Entity> entity_list = new List<Entity>();
         string upload_location = @"C:\DXFutilswebsite\Uploads\";
         string script_location = @"C:\DXFutilswebsite\Tiling_Scripts";
-        string python_location = @"C:\Python\Python34-64bit\WinPython-64bit-3.4.2.4\python-3.4.2.amd64\python.exe";
+        string python_location = @"C:\Python\Python35-64bit\python.exe";
+        string python_path = @"C:\Python\Python35-64bit";
         string entity_file_storage = @"C:\DXFutilswebsite\Script_Storage\";
         string tile_set_storage_location = @"C:\DXFutilswebsite\Tile_Set_Storage\";
         List<string> current_layer_list = new List<string>();
@@ -290,6 +291,7 @@ namespace DXFUtilsASP
             start.Arguments = args;//args is path to .py file and any cmd line args
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
+            start.WorkingDirectory = python_path;
             TextBoxScriptOutput.Text = "";
             using (Process process = Process.Start(start))
             {

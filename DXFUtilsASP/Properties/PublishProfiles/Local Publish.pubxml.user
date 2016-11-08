@@ -39,6 +39,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Account/OpenAuthProviders.ascx">
       <publishTime>09/28/2016 19:36:45</publishTime>
     </File>
+    <File Include="Account/Recipe_Management.aspx">
+      <publishTime>11/07/2016 08:49:22</publishTime>
+    </File>
     <File Include="Account/Register.aspx">
       <publishTime>09/28/2016 19:36:45</publishTime>
     </File>
@@ -58,13 +61,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/28/2016 19:36:45</publishTime>
     </File>
     <File Include="Account/Web.config">
-      <publishTime>04/10/2016 11:48:23</publishTime>
+      <publishTime>10/04/2016 11:48:23</publishTime>
     </File>
     <File Include="App_Data/DXFUtils-UserDB.mdf">
-      <publishTime>11/03/2016 09:34:25</publishTime>
+      <publishTime>11/08/2016 16:36:03</publishTime>
     </File>
     <File Include="App_Data/DXFUtils-UserDB_log.ldf">
-      <publishTime>11/03/2016 09:34:25</publishTime>
+      <publishTime>11/08/2016 16:36:03</publishTime>
+    </File>
+    <File Include="App_Data/Recipe_Database.mdf">
+      <publishTime>11/08/2016 16:36:03</publishTime>
+    </File>
+    <File Include="App_Data/Recipe_Database_log.ldf">
+      <publishTime>11/08/2016 16:36:03</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/28/2016 19:36:43</publishTime>
@@ -79,10 +88,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/28/2016 19:36:43</publishTime>
     </File>
     <File Include="bin/DXFUtilsASP.dll">
-      <publishTime>11/03/2016 08:12:34</publishTime>
+      <publishTime>08/11/2016 09:05:04</publishTime>
     </File>
     <File Include="bin/DXFUtilsASP.pdb">
-      <publishTime>11/03/2016 08:12:34</publishTime>
+      <publishTime>08/11/2016 09:05:04</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>09/28/2016 19:36:46</publishTime>
@@ -145,7 +154,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/28/2016 19:36:40</publishTime>
     </File>
     <File Include="bin/netDxf.dll">
-      <publishTime>04/10/2016 11:48:23</publishTime>
+      <publishTime>10/04/2016 11:48:23</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>09/28/2016 19:36:43</publishTime>
@@ -211,19 +220,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/28/2016 19:36:42</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>11/01/2016 17:33:14</publishTime>
+      <publishTime>01/11/2016 17:33:14</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>10/02/2016 18:57:14</publishTime>
+      <publishTime>02/10/2016 18:57:14</publishTime>
     </File>
     <File Include="Content/Images/BMP-512.png">
-      <publishTime>10/05/2016 13:05:40</publishTime>
+      <publishTime>05/10/2016 13:05:40</publishTime>
     </File>
     <File Include="Content/Images/dxf-icon-transparent.png">
-      <publishTime>10/05/2016 13:05:17</publishTime>
+      <publishTime>05/10/2016 13:05:17</publishTime>
     </File>
     <File Include="Content/Images/Logo.bmp">
       <publishTime>07/29/2016 22:38:20</publishTime>
+    </File>
+    <File Include="Content/Images/PleaseWait.gif">
+      <publishTime>11/05/2016 10:26:20</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>09/28/2016 19:36:45</publishTime>
@@ -232,10 +244,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/30/2016 16:49:32</publishTime>
     </File>
     <File Include="DXFTiler.aspx">
-      <publishTime>11/02/2016 15:58:01</publishTime>
+      <publishTime>11/05/2016 10:53:24</publishTime>
     </File>
     <File Include="DXFtoBMP.aspx">
-      <publishTime>10/19/2016 11:39:26</publishTime>
+      <publishTime>11/05/2016 10:49:30</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>09/28/2016 19:36:40</publishTime>
@@ -349,25 +361,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/28/2016 19:36:44</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>09/28/2016 19:36:42</publishTime>
+      <publishTime>07/11/2016 18:30:44</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>11/01/2016 17:24:31</publishTime>
+      <publishTime>11/04/2016 17:25:15</publishTime>
     </File>
     <File Include="Site.Mobile.Master">
       <publishTime>09/28/2016 19:36:45</publishTime>
     </File>
     <File Include="TNxTiler.aspx">
-      <publishTime>11/02/2016 15:24:47</publishTime>
+      <publishTime>11/05/2016 10:57:54</publishTime>
     </File>
     <File Include="User_Controls/DXF_Display_Control.ascx">
       <publishTime>10/10/2016 18:28:50</publishTime>
+    </File>
+    <File Include="User_Controls/WaitSpinner.ascx">
+      <publishTime>11/05/2016 10:53:20</publishTime>
     </File>
     <File Include="ViewSwitcher.ascx">
       <publishTime>09/28/2016 19:36:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/31/2016 14:09:38</publishTime>
+      <publishTime>11/07/2016 21:44:42</publishTime>
     </File>
   </ItemGroup>
 </Project>
