@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
 using System.Reflection;
+using System.Data.SqlClient;
 
 namespace DXFUtilsASP
 {
@@ -358,8 +359,59 @@ namespace DXFUtilsASP
                 {
                     LabelRenderWarning.Text = "SCRIPT_SUCCESS -  Render complete";
                     ButtonDownload.Visible = true;
+                    //Add recipe to database
 
-                }
+                    //create  object  of Connection Class..................
+                    SqlConnection con = new SqlConnection();
+
+                    try
+                    {     
+
+                        // Set Connection String property of Connection object..................
+                        con.ConnectionString = RecipeDB.ConnectionString;
+
+                        // Open Connection..................
+                        con.Open();
+
+                        //Create object of Command Class................
+                        SqlCommand cmd = new SqlCommand();
+
+                        //set Connection Property  of  Command object.............
+                        cmd.Connection = con;
+
+                        //cmd.CommandType = System.Data.CommandType.Text;
+
+
+                        //Set Command text Property of command object.........
+
+                        cmd.CommandText = "Insert into Bitmap_Recipes (Name, Filepath, Created_By, Description, Date) values ("
+                                + Session["output_file_name"].ToString() + ","
+                                + entity_file_storage + Session["output_file_name"].ToString() + ","
+                                + User.ToString() + ","
+                                + "DXF Conversion" + ","
+                                + DateTime.Today.Date.ToString() + ")";
+
+                        //Assign values as `parameter`. It avoids `SQL Injection`
+                        //cmd.Parameters.AddWithValue("@name", Session["output_file_name"].ToString());
+                        //cmd.Parameters.AddWithValue("@path", entity_file_storage + @"\" + Session["output_file_name"]);
+                        //cmd.Parameters.AddWithValue("@created", User.ToString());
+                        //cmd.Parameters.AddWithValue("@desc", "DXF conversion" );                     
+
+                        //cmd.Parameters.AddWithValue("@date", DateTime.Today.Date.ToString());
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        LabelRenderWarning.Text = "SQL Write Error " + ex.ToString();
+                        con.Close();
+                    }
+
+
+
+            }
                 else
                 {
                     LabelRenderWarning.Text = "SCRIPT_FAIL -  Render failed";

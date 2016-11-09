@@ -229,10 +229,14 @@ namespace DXFUtilsASP
             bool convert_lines = CheckBoxConvertToLines.Checked;
             string convert_lines_str = "False";
             if (convert_lines)
-                convert_lines_str = "True";         
+                convert_lines_str = "True";
 
-            
 
+            if (Directory.Exists(output_dir))
+            {
+                LabelRenderWarning.Text = "Recipe directory already exists - Please rename recipe.";
+                return;
+            }
 
             if (File.Exists(script))
             {

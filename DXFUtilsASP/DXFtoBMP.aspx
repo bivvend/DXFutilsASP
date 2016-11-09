@@ -6,7 +6,7 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+    <asp:SqlDataSource ID="RecipeDB" runat="server" ConnectionString="<%$ ConnectionStrings:RecipeDBConnection %>" SelectCommand="SELECT * FROM [Bitmap_Recipes]"></asp:SqlDataSource>
     <div class="jumbotron">
         <h1>DXF to Bitmap Converter</h1>
         <p class="lead">Routines for converting DXF files to bitmaps (.bmp/.tiff)</p>

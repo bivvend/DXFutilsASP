@@ -293,6 +293,11 @@ namespace DXFUtilsASP
 
             string mscan_dxf_dir = TextBoxMScanDir.Text;
 
+            if(Directory.Exists(tile_set_storage_location + root_output_filename))
+            {
+                LabelRenderWarning.Text = "Recipe directory already exists - Please rename recipe.";
+                return;
+            }
 
             if (File.Exists(script))
             {

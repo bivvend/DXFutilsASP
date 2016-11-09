@@ -18,9 +18,8 @@
             <div class="row">
                 <div class="col-md-8">
                     <h2>Bitmap Recipes</h2>
-                    <asp:GridView ID="GridViewBitmapRecipes" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="RecipeDB">
+                    <asp:GridView ID="GridViewBitmapRecipes" runat="server" AutoGenerateColumns="False" DataSourceID="RecipeDB" AllowSorting="True" AllowPaging="True" EmptyDataText="No data to display" >
                         <Columns>
-                            <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" SortExpression="ID" />
                             <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                             <asp:BoundField DataField="Filepath" HeaderText="Filepath" SortExpression="Filepath" />
                             <asp:BoundField DataField="Created_By" HeaderText="Created_By" SortExpression="Created_By" />
@@ -31,7 +30,7 @@
                 </div>
                 <div class="col-md-8">
                     <h2>Tiler Recipes</h2>
-                    <asp:GridView ID="GridViewTiler" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="TilerDB">
+                    <asp:GridView ID="GridViewTiler" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="TilerDB" AllowSorting="True" AllowPaging="True" EmptyDataText="No data to display" >
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" SortExpression="ID" />
                             <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -46,7 +45,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <h2>Touchnetix Recipes</h2>
-                    <asp:GridView ID="GridViewTNx" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="TNxTilerDB">
+                    <asp:GridView ID="GridViewTNx" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="TNxTilerDB" AllowSorting="True" AllowPaging="True" EmptyDataText="No data to display" >
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" SortExpression="ID" />
                             <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
