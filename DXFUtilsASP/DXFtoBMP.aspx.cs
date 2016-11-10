@@ -361,55 +361,44 @@ namespace DXFUtilsASP
                     ButtonDownload.Visible = true;
                     //Add recipe to database
 
-                    //create  object  of Connection Class..................
-                    SqlConnection con = new SqlConnection();
-
-                    try
-                    {     
-
-                        // Set Connection String property of Connection object..................
-                        con.ConnectionString = RecipeDB.ConnectionString;
-
-                        // Open Connection..................
-                        con.Open();
-
-                        //Create object of Command Class................
-                        SqlCommand cmd = new SqlCommand();
-
-                        //set Connection Property  of  Command object.............
-                        cmd.Connection = con;
-
-                        //cmd.CommandType = System.Data.CommandType.Text;
-
-
-                        //Set Command text Property of command object.........
-
-                        cmd.CommandText = "Insert into Bitmap_Recipes (Name, Filepath, Created_By, Description, Date) values ("
-                                + Session["output_file_name"].ToString() + ","
-                                + entity_file_storage + Session["output_file_name"].ToString() + ","
-                                + User.ToString() + ","
-                                + "DXF Conversion" + ","
-                                + DateTime.Today.Date.ToString() + ")";
-
-                        //Assign values as `parameter`. It avoids `SQL Injection`
-                        //cmd.Parameters.AddWithValue("@name", Session["output_file_name"].ToString());
-                        //cmd.Parameters.AddWithValue("@path", entity_file_storage + @"\" + Session["output_file_name"]);
-                        //cmd.Parameters.AddWithValue("@created", User.ToString());
-                        //cmd.Parameters.AddWithValue("@desc", "DXF conversion" );                     
-
-                        //cmd.Parameters.AddWithValue("@date", DateTime.Today.Date.ToString());
-
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-
-                    }
-                    catch (Exception ex)
+                    //create  object  of Connection Class.
+                    using (SqlConnection con = new SqlConnection())
                     {
-                        LabelRenderWarning.Text = "SQL Write Error " + ex.ToString();
-                        con.Close();
+                        try
+                        {
+
+                            // Set Connection String property of Connection object..................
+                            con.ConnectionString = RecipeDB.ConnectionString;
+
+                            // Open Connection..................
+                            con.Open();
+
+                            //Create object of Command Class................
+                            SqlCommand cmd = new SqlCommand("INSERT INTO Bitmap_Recipes(Name, Filepath, Created_By, Description, Date) VALUES(@name, @path, @created, @desc, @date)", con);
+                            string Name = Session["output_file_name"].ToString();
+                            string Filepath = entity_file_storage + Session["output_file_name"].ToString();
+                            string Created_By = User.Identity.Name.ToString();
+                            string Description = "DXF Conversion    ";
+                            string Date = DateTime.Today.Date.ToString();
+
+                            //Assign values as `parameter`. It avoids `SQL Injection`
+                            cmd.Parameters.AddWithValue("@name", Name);
+                            cmd.Parameters.AddWithValue("@path", Filepath);
+                            cmd.Parameters.AddWithValue("@created", Created_By);
+                            cmd.Parameters.AddWithValue("@desc", Description);
+                            cmd.Parameters.AddWithValue("@date", Date);
+
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            LabelRenderWarning.Text = "SQL Write Error " + ex.ToString();
+                            con.Close();
+                        }
+
                     }
-
-
 
             }
                 else
