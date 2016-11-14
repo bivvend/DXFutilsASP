@@ -5,8 +5,8 @@
 
 
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">   
+    <asp:SqlDataSource ID="TilerRecipeDB" runat="server" ConnectionString="<%$ ConnectionStrings:RecipeDBConnection %>" SelectCommand="SELECT * FROM [Tiler_Recipes]"></asp:SqlDataSource> 
     <div class="jumbotron">
         <h1>DXF Tiler</h1>
         <p class="lead">Routines for converting DXF files to sets of tiles</p>
@@ -61,6 +61,8 @@
                 </p>
                 <p>
                 </p>
+                <p>
+                </p>
             </p>
         </div>
     </div>
@@ -107,6 +109,8 @@
                     <asp:Label class="text_box_label" ID="Label4" runat="server" Text="Center Y(mm)" ></asp:Label>
                     <asp:TextBox ID="TextBoxCenterY" runat="server">0.0</asp:TextBox> <br />
                     </p>                    
+                    <p>
+                    </p>
                     <p>
                     </p>
                     <p>
@@ -205,6 +209,10 @@
                         </p>
                         <p>
                         </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
                     </p>
                 </p>
             </div>
@@ -220,6 +228,8 @@
                     <p>
                         <asp:Button ID="ButtonSelectScript" class="btn btn-primary" runat="server" Text="Select Script" OnClick="ButtonSelectScript_Click" Width="280px" />
                     </p>    
+                        <p>
+                        </p>
                         <p>
                         </p>
                         <p>

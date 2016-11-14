@@ -175,14 +175,6 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
-    <Content Include="App_Data\DXFUtils-UserDB.mdf" />
-    <Content Include="App_Data\DXFUtils-UserDB_log.ldf">
-      <DependentUpon>DXFUtils-UserDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\Recipe_Database.mdf" />
-    <Content Include="App_Data\Recipe_Database_log.ldf">
-      <DependentUpon>Recipe_Database.mdf</DependentUpon>
-    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap OLD.css" />
     <Content Include="Content\bootstrap OLD.min.css" />
@@ -460,6 +452,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="site_packages\" />
   </ItemGroup>
   <PropertyGroup>

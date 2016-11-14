@@ -4,7 +4,7 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+    <asp:SqlDataSource ID="TNxRecipeDB" runat="server" ConnectionString="<%$ ConnectionStrings:RecipeDBConnection %>" SelectCommand="SELECT * FROM [TNx_Recipes]"></asp:SqlDataSource>
     <div class="jumbotron">
         <h1>Touchnetix Recipe Tiler</h1>
         <p class="lead">Routines for splitting Touchnetix DXF files into tiles </p>
