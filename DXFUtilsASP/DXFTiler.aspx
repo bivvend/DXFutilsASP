@@ -5,7 +5,8 @@
 
 
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">    
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">   
+    <asp:SqlDataSource ID="TilerRecipeDB" runat="server" ConnectionString="<%$ ConnectionStrings:RecipeDBConnection %>" SelectCommand="SELECT * FROM [Tiler_Recipes]"></asp:SqlDataSource> 
     <div class="jumbotron">
         <h1>DXF Tiler</h1>
         <p class="lead">Routines for converting DXF files to sets of tiles</p>

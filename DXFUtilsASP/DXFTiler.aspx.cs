@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Diagnostics;
 using System.Reflection;
+using System.Data.SqlClient;
 
 namespace DXFUtilsASP
 {
@@ -355,6 +356,43 @@ namespace DXFUtilsASP
                 {
                     LabelRenderWarning.Text = "SCRIPT_SUCCESS -  Render complete";
                     ButtonDownload.Visible = true;
+
+                    using (SqlConnection con = new SqlConnection())
+                    {
+                        try
+                        {
+
+                            // Set Connection String property of Connection object..................
+                            con.ConnectionString = TilerRecipeDB.ConnectionString;
+
+                            // Open Connection..................
+                            con.Open();
+
+                            //Create object of Command Class................
+                            SqlCommand cmd = new SqlCommand("INSERT INTO Tiler_Recipes(Name, Filepath, Created_By, Description, Date) VALUES(@name, @path, @created, @desc, @date)", con);
+                            string Name = root_output_filename;
+                            string Filepath = Session["output_file_name"].ToString();
+                            string Created_By = User.Identity.Name.ToString();
+                            string Description = "DXF Conversion    ";
+                            string Date = DateTime.Today.ToString();
+
+                            //Assign values as `parameter`. It avoids `SQL Injection`
+                            cmd.Parameters.AddWithValue("@name", Name);
+                            cmd.Parameters.AddWithValue("@path", Filepath);
+                            cmd.Parameters.AddWithValue("@created", Created_By);
+                            cmd.Parameters.AddWithValue("@desc", Description);
+                            cmd.Parameters.AddWithValue("@date", Date);
+
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            LabelRenderWarning.Text = "SQL Write Error " + ex.ToString();
+
+                        }
+
+                    }
 
                 }
                 else
