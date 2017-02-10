@@ -686,7 +686,14 @@ namespace DXFUtilsASP
                 if (spline.Layer.Name == layer_name || layer_name == "All")
                 {
                     temp_polyline = spline.ToPolyline(spline.ControlPoints.Count * SplineInterpolationNumber);
-                    temp_polyline.Layer.Name = spline.Layer.Name;
+                    try
+                    {
+                        temp_polyline.Layer.Name = spline.Layer.Name;
+                    }
+                    catch(Exception ex)
+                    { 
+                        
+                    }
                     dxf.AddEntity(temp_polyline);
                 }
             }
@@ -701,7 +708,14 @@ namespace DXFUtilsASP
                     foreach (netDxf.Entities.EntityObject e in temp_entity_storage)
                     {
                         netDxf.Entities.EntityObject e_new = (netDxf.Entities.EntityObject)e.Clone();
-                        e_new.Layer.Name = apolyline.Layer.Name;
+                        try
+                        {
+                            e_new.Layer.Name = apolyline.Layer.Name;                            
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
                         dxf.AddEntity(e_new);
                     }
                 }
@@ -716,7 +730,14 @@ namespace DXFUtilsASP
                     foreach (netDxf.Entities.EntityObject e in temp_entity_storage)
                     {
                         netDxf.Entities.EntityObject e_new = (netDxf.Entities.EntityObject)e.Clone();
-                        e_new.Layer.Name = apolyline.Layer.Name;
+                        try
+                        {
+                            e_new.Layer.Name = apolyline.Layer.Name;
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
                         dxf.AddEntity(e_new);
                     }
                 }

@@ -314,15 +314,15 @@ namespace DXFUtilsASP
                 Save_Data(layer_name);
                 string args = script;  //sys.argv[0]
                 //input_file = str(sys.argv[1])
-                args += " " + Session["data_file"].ToString();
+                args += " " + "\"" + Session["data_file"].ToString() + "\"" ;
                 //layer_name = str(sys.argv[2])
-                args += " " + layer_name;
+                args += " " + "\"" + layer_name + "\"";
                 //DPI_x = float(sys.argv[3])
                 args += " " + dpi_x.ToString();
                 //DPI_y = float(sys.argv[4])
                 args += " " + dpi_y.ToString();
                 //output_filename = str(sys.argv[5])
-                args += " " + entity_file_storage + @"\" + Session["output_file_name"];
+                args += " " + "\"" + entity_file_storage + @"\" + Session["output_file_name"] + "\"";
                 //invert_x = bool(sys.argv[6] == "True")
                 if (CheckBoxInvertX.Checked)
                     args += " " + "True";

@@ -194,7 +194,7 @@ namespace DXFUtilsASP
             try
             {
                 int number_in_x = Convert.ToInt32(TextBoxNumberX.Text);
-                int number_in_y = Convert.ToInt32(TextBoxNumberX.Text);
+                int number_in_y = Convert.ToInt32(TextBoxNumberY.Text);
                 double pitch_x = Convert.ToDouble(TextBoxPitchX.Text);
                 double pitch_y = Convert.ToDouble(TextBoxPitchY.Text);
                 double center_x = Convert.ToDouble(TextBoxCenterX.Text);
@@ -208,8 +208,8 @@ namespace DXFUtilsASP
                     for (int y = 0; y < number_in_y; y++)
                     {
                         //calculate positions of tiles
-                        tile_x = (pitch_x * (x - (number_in_x / 2) + 0.5d)) + center_x;
-                        tile_y = (pitch_y * (y - (number_in_y / 2) + 0.5d)) + center_y;
+                        tile_x = (pitch_x * ((double)x - ((double)number_in_x / 2) + 0.5d)) + center_x;
+                        tile_y = (pitch_y * ((double)y - ((double)number_in_y / 2) + 0.5d)) + center_y;
                         tile_list.Add(new Tile(tile_x, tile_y, pitch_x, pitch_y));
                     }
                 }
@@ -305,9 +305,9 @@ namespace DXFUtilsASP
                 Save_Data("All");
                 string args = script;  //sys.argv[0]
                 //input_file = str(sys.argv[1])
-                args += " " + Session["data_file"].ToString();
+                args += " " + "\"" + Session["data_file"].ToString() +"\"";
                 // layer_name = str(sys.argv[2])
-                args += " " + layer_name;
+                args += " " + "\"" + layer_name + "\"";
                 // number_in_x = int(sys.argv[3])
                 args += " " + number_in_x;
                 // number_in_y = int(sys.argv[4])
@@ -321,7 +321,7 @@ namespace DXFUtilsASP
                 // center_y = float(sys.argv[8])
                 args += " " + center_y;
                 // root_output_filename = str(sys.argv[9])
-                args += " " + root_output_filename;
+                args += " " + "\"" + root_output_filename + "\"";
                 // dxf_format = str(sys.argv[10])
                 args += " " + DXF_format;
                 // extend_length = float(sys.argv[11])
@@ -339,9 +339,9 @@ namespace DXFUtilsASP
                 // TNx_type = bool(sys.argv[17])
                 args += " " + "False";
                 // output_dir = str(sys.argv[18])
-                args += " " + tile_set_storage_location + root_output_filename;
+                args += " " + "\"" + tile_set_storage_location + root_output_filename + "\"";
                 //m_scan_dxf_dir = str(sys.argv[19])
-                args += " " + mscan_dxf_dir;
+                args += " " +  "\"" + mscan_dxf_dir + "\"";
 
                 run_script(python_location, args);
             }
