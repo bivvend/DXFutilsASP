@@ -311,7 +311,7 @@ namespace DXFUtilsASP
 
             if (File.Exists(script))
             {
-                Save_Data(layer_name);
+                Save_Data("All");
                 string args = script;  //sys.argv[0]
                 //input_file = str(sys.argv[1])
                 args += " " + "\"" + Session["data_file"].ToString() + "\"" ;

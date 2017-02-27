@@ -82,7 +82,7 @@
                     <asp:TextBox ID="TextBoxOutputFilename" runat="server">Output.tiff</asp:TextBox> <br />
                     </p>
                     <p>
-                    <asp:Label class="text_box_label" ID="Label9" runat="server" Text="Layer" ></asp:Label>
+                    <asp:Label class="text_box_label" ID="Label9" runat="server" Text="Layer(s) (,)" ></asp:Label>
                     <asp:TextBox ID="TextBoxSelectedLayer" runat="server">All</asp:TextBox> <br />
                     </p>
 
