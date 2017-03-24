@@ -68,6 +68,8 @@
                     </p>
                     <p>
                     </p>
+                    <p>
+                    </p>
                 </p>
             </div>
         </div>
@@ -107,7 +109,7 @@
                     </p>
                     <p>
                     <asp:Label class="text_box_label" ID="Label20" runat="server" Text="MScan DXF dir. " ></asp:Label>
-                    <asp:TextBox ID="TextBoxMScanDir" runat="server">C:\Programs\Recipe</asp:TextBox> <br />
+                    <asp:TextBox ID="TextBoxMScanDir" runat="server">C:\Programs\Recipes</asp:TextBox> <br />
                     </p>
                     <p>
                         <asp:Button ID="ButtonRender" runat="server" class="btn btn-primary" Text="Run Script" Width="245px" OnClick="ButtonRender_Click" />
@@ -117,11 +119,13 @@
                             <uc1:WaitSpinner runat="server" id="WaitSpinner" />
                         </ProgressTemplate>
                         </asp:UpdateProgress>
+                        <p>
+                        </p>
+                        <p>
+                            <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
+                        </p>
                     </p>
-                    <p>
-                        <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
-                    </p>
-            </div>
+                    </div>
 
             <div class="col-md-4">
                 <h2>Rendering scripts</h2>
@@ -134,6 +138,8 @@
                     <p>
                         <asp:Button ID="ButtonSelectScript" class="btn btn-primary" runat="server" Text="Select Script" OnClick="ButtonSelectScript_Click" Width="280px" />
                     </p>    
+                        <p>
+                        </p>
                         <p>
                         </p>
                         <p>

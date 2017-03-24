@@ -107,7 +107,7 @@
                     </p>
                     <p>
                     <asp:Label class="text_box_label" ID="Label20" runat="server" Text="MScan DXF dir. " ></asp:Label>
-                    <asp:TextBox ID="TextBoxMScanDir" runat="server">C:\Programs\Recipe</asp:TextBox> <br />
+                    <asp:TextBox ID="TextBoxMScanDir" runat="server">C:\Programs\Recipes</asp:TextBox> <br />
                     </p>
                     <p>
                         <asp:Button ID="ButtonRender" runat="server" class="btn btn-primary" Text="Run Script" Width="245px" OnClick="ButtonRender_Click" />

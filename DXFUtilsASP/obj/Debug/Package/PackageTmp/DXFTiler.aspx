@@ -63,6 +63,8 @@
                 </p>
                 <p>
                 </p>
+                <p>
+                </p>
             </p>
         </div>
     </div>
@@ -109,6 +111,8 @@
                     <asp:Label class="text_box_label" ID="Label4" runat="server" Text="Center Y(mm)" ></asp:Label>
                     <asp:TextBox ID="TextBoxCenterY" runat="server">0.0</asp:TextBox> <br />
                     </p>                    
+                    <p>
+                    </p>
                     <p>
                     </p>
                     <p>
@@ -181,8 +185,8 @@
                         <asp:Label class="checkbox label" ID="Label16" runat="server" Text=' Convert curves' ></asp:Label>
                     </p>
                     <p>
-                    <asp:Label class="text_box_label" ID="Label20" runat="server" Text="MScan DXF dir. " ></asp:Label>
-                    <asp:TextBox ID="TextBoxMScanDir" runat="server">C:\Programs\Recipe</asp:TextBox> <br />
+                        <asp:Label class="text_box_label" ID="Label20" runat="server" Text="MScan DXF dir. " ></asp:Label>
+                        <asp:TextBox ID="TextBoxMScanDir" runat="server">C:\Programs\Recipes</asp:TextBox> <br />
                     </p>
                     <p>
                     </p>
@@ -213,6 +217,10 @@
                         </p>
                         <p>
                         </p>
+                        <p>
+                        </p>
+                        <p>
+                        </p>
                     </p>
                 </p>
             </div>
@@ -228,6 +236,8 @@
                     <p>
                         <asp:Button ID="ButtonSelectScript" class="btn btn-primary" runat="server" Text="Select Script" OnClick="ButtonSelectScript_Click" Width="280px" />
                     </p>    
+                        <p>
+                        </p>
                         <p>
                         </p>
                         <p>

@@ -714,7 +714,7 @@ namespace DXFUtilsASP
                         }
                         catch(Exception ex)
                         {
-
+                            
                         }
                         dxf.AddEntity(e_new);
                     }
