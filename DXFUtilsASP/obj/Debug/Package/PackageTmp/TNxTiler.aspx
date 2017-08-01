@@ -68,6 +68,8 @@
                     </p>
                     <p>
                     </p>
+                    <p>
+                    </p>
                 </p>
             </div>
         </div>
@@ -117,11 +119,13 @@
                             <uc1:WaitSpinner runat="server" id="WaitSpinner" />
                         </ProgressTemplate>
                         </asp:UpdateProgress>
+                        <p>
+                        </p>
+                        <p>
+                            <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
+                        </p>
                     </p>
-                    <p>
-                        <asp:Label ID="LabelRenderWarning" runat="server" Text=""></asp:Label>
-                    </p>
-            </div>
+                    </div>
 
             <div class="col-md-4">
                 <h2>Rendering scripts</h2>
@@ -134,6 +138,8 @@
                     <p>
                         <asp:Button ID="ButtonSelectScript" class="btn btn-primary" runat="server" Text="Select Script" OnClick="ButtonSelectScript_Click" Width="280px" />
                     </p>    
+                        <p>
+                        </p>
                         <p>
                         </p>
                         <p>

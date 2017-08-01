@@ -16,10 +16,10 @@ namespace DXFUtilsASP
     public partial class DXFtoBMP : System.Web.UI.Page
     {
         List<Entity> entity_list = new List<Entity>();
-        string upload_location = @"C:\DXFutilswebsite\Uploads\";
-        string script_location = @"C:\DXFutilswebsite\Scripts";
-        string python_location = @"C:\Python\Python35-64bit\python.exe";
-        string entity_file_storage  = @"C:\DXFutilswebsite\Script_Storage\";
+        string upload_location = @"D:\DXFutilswebsite\Uploads\";
+        string script_location = @"D:\DXFutilswebsite\Scripts";
+        string python_location = @"C:\WinPython-64bit-3.4.2.4\python-3.4.2.amd64\python.exe";
+        string entity_file_storage  = @"D:\DXFutilswebsite\Script_Storage\";
         List<string> current_layer_list = new List<string>();
         List<string> script_list = new List<string>();
         int line_count = 0;

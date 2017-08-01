@@ -678,23 +678,62 @@ namespace DXFUtilsASP
             netDxf.Vector2 previous_point = new netDxf.Vector2(0.0d, 0.0d);
             netDxf.Entities.LwPolylineVertex avertex = new netDxf.Entities.LwPolylineVertex();
             netDxf.Entities.PolylineVertex bvertex = new netDxf.Entities.PolylineVertex();
-            
+
 
             //convert Splines to polylines 
+
+            double spline_start_x = 0.0d;
+            double spline_start_y = 0.0d;
+            double spline_end_x = 0.0d;
+            double spline_end_y = 0.0d;
+            double spline_length = 0.0d;
+            int num_points = 1;
+            double average_length_per_segment = 1.0d;
+            int new_spline_interpolation_number = 1;
+
+            double spline_segment_length = 0.0d;
+
+
             foreach (netDxf.Entities.Spline spline in dxf.Splines)
             {
                 if (spline.Layer.Name == layer_name || layer_name == "All")
                 {
-                    temp_polyline = spline.ToPolyline(spline.ControlPoints.Count * SplineInterpolationNumber);
+                    //Calculate the best spline conversion interpolation number assume length< 150 um are bad.
+                    num_points = spline.ControlPoints.Count;
+                    spline_start_x = spline.ControlPoints[0].Position.X;
+                    spline_start_y = spline.ControlPoints[0].Position.Y;
+                    spline_end_x = spline.ControlPoints[num_points - 1].Position.X;
+                    spline_end_y = spline.ControlPoints[num_points - 1].Position.Y;
+
+                    spline_length = Math.Sqrt(Math.Pow((spline_start_x - spline_end_x), 2) + Math.Pow((spline_start_y - spline_end_y), 2));
+                    if (spline_length > 0.0d)
+                    {
+                        average_length_per_segment = spline_length / ((double)num_points * (double)(SplineInterpolationNumber));
+
+                        if(average_length_per_segment < 0.15d)
+                        {
+                            new_spline_interpolation_number = (int)((double)SplineInterpolationNumber * (average_length_per_segment /0.15d ));
+                        }
+                        if (new_spline_interpolation_number < 1)
+                            new_spline_interpolation_number = 1;
+                    }
+                    else
+                    {
+                        new_spline_interpolation_number = SplineInterpolationNumber;
+                    }
+
+                    
+                    temp_polyline = spline.ToPolyline(spline.ControlPoints.Count * new_spline_interpolation_number);
                     try
                     {
                         temp_polyline.Layer.Name = spline.Layer.Name;
                     }
-                    catch(Exception ex)
-                    { 
-                        
+                    catch (Exception ex)
+                    {
+
                     }
                     dxf.AddEntity(temp_polyline);
+
                 }
             }
 
@@ -710,11 +749,11 @@ namespace DXFUtilsASP
                         netDxf.Entities.EntityObject e_new = (netDxf.Entities.EntityObject)e.Clone();
                         try
                         {
-                            e_new.Layer.Name = apolyline.Layer.Name;                            
+                            e_new.Layer.Name = apolyline.Layer.Name;
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
-                            
+
                         }
                         dxf.AddEntity(e_new);
                     }
@@ -734,7 +773,7 @@ namespace DXFUtilsASP
                         {
                             e_new.Layer.Name = apolyline.Layer.Name;
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
 
                         }
@@ -777,7 +816,7 @@ namespace DXFUtilsASP
             }
 
             List<DxfObject> entities = new List<DxfObject>();
-           
+
             //Convert to Entity
 
             if (layer_name == "All")
@@ -799,7 +838,8 @@ namespace DXFUtilsASP
             new_ang_dir = new_dxf.DrawingVariables.Angdir.ToString();
 
             //MessageBox.Show(number.ToString());
-            //			
+            //		
+            	
             return list_of_vectors;
             //vector_list = list_of_vectors;
 
