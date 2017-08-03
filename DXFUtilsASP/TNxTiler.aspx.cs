@@ -285,10 +285,8 @@ namespace DXFUtilsASP
 
                             // Set Connection String property of Connection object..................
                             con.ConnectionString = TNxRecipeDB.ConnectionString;
-
                             // Open Connection..................
                             con.Open();
-
                             //Create object of Command Class................
                             SqlCommand cmd = new SqlCommand("INSERT INTO TNx_Recipes(Name, Filepath, Created_By, Description, Date, Customer) VALUES(@name, @path, @created, @desc, @date, @customer)", con);
                             string Name = Session["root_of_filename"].ToString();

@@ -131,3 +131,4 @@ C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.MicrosoftAccount.x
 C:\Github\DXFUtilsASP\DXFUtilsASP\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.dll
 C:\Github\DXFUtilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.pdb
+C:\Github\DXFutilsASP\DXFUtilsASP\obj\Debug\DXFUtilsASP.csprojResolveAssemblyReference.cache
