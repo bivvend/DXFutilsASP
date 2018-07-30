@@ -88,10 +88,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2017 14:48:33</publishTime>
     </File>
     <File Include="bin/DXFUtilsASP.dll">
-      <publishTime>08/03/2017 13:56:03</publishTime>
+      <publishTime>07/30/2018 15:00:44</publishTime>
     </File>
     <File Include="bin/DXFUtilsASP.pdb">
-      <publishTime>08/03/2017 13:56:03</publishTime>
+      <publishTime>07/30/2018 15:00:44</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/18/2017 14:48:33</publishTime>
@@ -382,7 +382,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2017 14:48:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/03/2017 14:05:20</publishTime>
+      <publishTime>07/30/2018 15:10:38</publishTime>
     </File>
   </ItemGroup>
 </Project>

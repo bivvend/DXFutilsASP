@@ -637,7 +637,7 @@ namespace DXFUtilsASP
                 dxf_document = DxfDocument.Load(filename);
                 entity_count = dxf_document.LwPolylines.Count + dxf_document.Lines.Count
                     + dxf_document.Arcs.Count + dxf_document.Polylines.Count
-                    + dxf_document.Circles.Count;  //must be a nice way to do this!
+                    + dxf_document.Circles.Count + dxf_document.Ellipses.Count;  //must be a nice way to do this!
 
             }
             catch
@@ -679,6 +679,20 @@ namespace DXFUtilsASP
             netDxf.Entities.LwPolylineVertex avertex = new netDxf.Entities.LwPolylineVertex();
             netDxf.Entities.PolylineVertex bvertex = new netDxf.Entities.PolylineVertex();
 
+            //convert Ellipses to Circles (Hack)
+            foreach (netDxf.Entities.Ellipse ellipse in dxf.Ellipses)
+            {
+                if (ellipse.Layer.Name == layer_name || layer_name == "All")
+                {
+                    double centerX = ellipse.Center.X;
+                    double centerY = ellipse.Center.Y;
+                    double radius = (ellipse.MajorAxis + ellipse.MinorAxis) / 4.0;
+
+                    netDxf.Entities.Circle newCircle = new netDxf.Entities.Circle(new Vector2(centerX, centerY), radius);
+
+                    dxf.AddEntity(newCircle);
+                }
+            }
 
             //convert Splines to polylines 
 

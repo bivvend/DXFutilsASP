@@ -114,8 +114,8 @@ namespace DXFUtilsASP
         {
             LabelWarn.Visible = false;
             if (FileUploadDXF_TO_BMP.HasFile)
-            {
-                if (FileUploadDXF_TO_BMP.FileName.Contains(".dxf"))
+            { 
+                if (FileUploadDXF_TO_BMP.FileName.ToLower().Contains(".dxf"))
                 {
                     try
                     {
